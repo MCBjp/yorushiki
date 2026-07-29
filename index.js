@@ -3,7 +3,115 @@
 const NEWS_JSON_FILE = "news.json";
 const LIVE_JSON_FILE = "live.json";
 
+
+function injectHomeLiveStyles() {
+  const styleId = "home-live-card-compact-style";
+
+  if (document.getElementById(styleId)) {
+    return;
+  }
+
+  const style = document.createElement("style");
+  style.id = styleId;
+  style.textContent = `
+    #home-live-content.home-live-card {
+      padding: 28px 30px;
+    }
+
+    #home-live-content .home-live-top {
+      margin: 0 0 24px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    #home-live-content .home-live-date,
+    #home-live-content .home-live-venue,
+    #home-live-content .home-live-title,
+    #home-live-content .home-live-artists,
+    #home-live-content .home-live-message {
+      font-family: inherit;
+    }
+
+    #home-live-content .home-live-date,
+    #home-live-content .home-live-venue {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.5;
+      letter-spacing: 0.02em;
+    }
+
+    #home-live-content .home-live-date {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    #home-live-content .home-live-venue {
+      min-width: 0;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    #home-live-content .home-live-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.75;
+      letter-spacing: 0.02em;
+      overflow-wrap: anywhere;
+    }
+
+    #home-live-content .home-live-artists {
+      margin: 26px 0 0;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.75;
+      letter-spacing: 0.02em;
+      overflow-wrap: anywhere;
+    }
+
+    #home-live-content .home-live-message {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 780px) {
+      #home-live-content.home-live-card {
+        padding: 22px 24px;
+      }
+
+      #home-live-content .home-live-top {
+        margin-bottom: 22px;
+        gap: 18px;
+      }
+
+      #home-live-content .home-live-date,
+      #home-live-content .home-live-venue,
+      #home-live-content .home-live-title,
+      #home-live-content .home-live-artists,
+      #home-live-content .home-live-message {
+        font-size: 15px;
+      }
+
+      #home-live-content .home-live-venue {
+        max-width: 58%;
+      }
+
+      #home-live-content .home-live-artists {
+        margin-top: 24px;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  injectHomeLiveStyles();
+
   loadNews().catch(function (error) {
     console.error(error);
     renderNewsError();
@@ -68,7 +176,6 @@ async function loadNextLive() {
 
   if (visibleItems.length === 0) {
     box.innerHTML = `
-      <p class="small-label">COMING SOON</p>
       <p class="home-live-message">現在、出演予定のライブはありません。</p>
     `;
     return;
@@ -76,11 +183,27 @@ async function loadNextLive() {
 
   const next = visibleItems[0];
 
+  const artists = Array.isArray(next.artists)
+    ? next.artists
+        .map(function (artist) {
+          return String(artist || "").trim();
+        })
+        .filter(Boolean)
+    : [];
+
+  const artistsHtml = artists.length > 0
+    ? `<p class="home-live-artists">${escapeHtml(artists.join(" / "))}</p>`
+    : "";
+
   box.innerHTML = `
-    <p class="small-label">NEXT LIVE</p>
-    <p class="release-date">${escapeHtml(formatDate(next.date || ""))}</p>
-    <h3 class="release-title">${escapeHtml(next.title || "")}</h3>
-    <p class="home-live-message">${escapeHtml(next.venue || "")}</p>
+    <div class="home-live-top">
+      <p class="home-live-date">${escapeHtml(formatDate(next.date || ""))}</p>
+      <p class="home-live-venue">${escapeHtml(next.venue || "")}</p>
+    </div>
+
+    <p class="home-live-title">${escapeHtml(next.title || "")}</p>
+
+    ${artistsHtml}
   `;
 }
 
@@ -92,7 +215,6 @@ function renderLiveError() {
   }
 
   box.innerHTML = `
-    <p class="small-label">COMING SOON</p>
     <p class="home-live-message">ライブ情報を読み込めませんでした。</p>
   `;
 }

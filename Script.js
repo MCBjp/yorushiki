@@ -36,3 +36,46 @@ window.addEventListener("keydown", (event) => {
 if (currentYear) {
   currentYear.textContent = new Date().getFullYear();
 }
+
+/* LIVEページ：UPCOMING / PAST タブ */
+const liveTabs = document.querySelectorAll("[data-live-tab]");
+const livePanels = document.querySelectorAll("[data-live-panel]");
+
+function activateLiveTab(tabName) {
+  liveTabs.forEach((tab) => {
+    const isActive = tab.dataset.liveTab === tabName;
+
+    tab.classList.toggle("is-active", isActive);
+    tab.setAttribute("aria-selected", String(isActive));
+  });
+
+  livePanels.forEach((panel) => {
+    const isActive = panel.dataset.livePanel === tabName;
+
+    panel.classList.toggle("is-active", isActive);
+    panel.hidden = !isActive;
+  });
+}
+
+liveTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    activateLiveTab(tab.dataset.liveTab);
+  });
+
+  tab.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+      return;
+    }
+
+    event.preventDefault();
+
+    const tabs = Array.from(liveTabs);
+    const currentIndex = tabs.indexOf(tab);
+    const direction = event.key === "ArrowRight" ? 1 : -1;
+    const nextIndex = (currentIndex + direction + tabs.length) % tabs.length;
+    const nextTab = tabs[nextIndex];
+
+    nextTab.focus();
+    activateLiveTab(nextTab.dataset.liveTab);
+  });
+});

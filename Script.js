@@ -1,31 +1,38 @@
-// 夜敷 Official Website
+const menuButton = document.querySelector(".menu-button");
+const globalNav = document.querySelector(".global-nav");
+const navLinks = document.querySelectorAll(".global-nav a");
+const currentYear = document.querySelector("#current-year");
 
-const year = document.querySelector("footer p");
-
-if (year) {
-  const currentYear = new Date().getFullYear();
-  year.innerHTML = `&copy; ${currentYear} 夜敷`;
+function closeMenu() {
+  menuButton?.setAttribute("aria-expanded", "false");
+  menuButton?.setAttribute("aria-label", "メニューを開く");
+  globalNav?.classList.remove("is-open");
+  document.body.classList.remove("menu-open");
 }
 
-// スムーズスクロール（古いブラウザ対策）
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener("click", event => {
-    const targetId = link.getAttribute("href");
+menuButton?.addEventListener("click", () => {
+  const isOpen = menuButton.getAttribute("aria-expanded") === "true";
 
-    if (targetId === "#") return;
+  menuButton.setAttribute("aria-expanded", String(!isOpen));
+  menuButton.setAttribute(
+    "aria-label",
+    isOpen ? "メニューを開く" : "メニューを閉じる"
+  );
 
-    const target = document.querySelector(targetId);
-
-    if (!target) return;
-
-    event.preventDefault();
-
-    target.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  });
+  globalNav?.classList.toggle("is-open", !isOpen);
+  document.body.classList.toggle("menu-open", !isOpen);
 });
 
-console.log("Yorushiki Official Website Loaded");
+navLinks.forEach((link) => {
+  link.addEventListener("click", closeMenu);
+});
 
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeMenu();
+  }
+});
+
+if (currentYear) {
+  currentYear.textContent = new Date().getFullYear();
+}

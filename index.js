@@ -45,7 +45,13 @@ function initializeHomeGallery() {
   }
 
   let currentIndex = 0;
-  let scrollFrame = null;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchCurrentX = 0;
+  let touchCurrentY = 0;
+  let isTouching = false;
+  let directionLocked = false;
+  let isHorizontalGesture = false;
 
   function normalizeIndex(index) {
     if (index < 0) {
@@ -59,9 +65,7 @@ function initializeHomeGallery() {
     return index;
   }
 
-  function updateIndicators(index) {
-    currentIndex = normalizeIndex(index);
-
+  function updateIndicators() {
     slides.forEach(function (slide, slideIndex) {
       slide.setAttribute(
         "aria-hidden",
@@ -82,28 +86,75 @@ function initializeHomeGallery() {
     });
   }
 
-  function moveToSlide(index, behavior) {
-    const nextIndex = normalizeIndex(index);
-    const slideWidth = track.clientWidth;
+  function setTrackPosition(index, animate) {
+    const slideWidth = track.getBoundingClientRect().width;
 
     if (slideWidth <= 0) {
       return;
     }
 
-    track.scrollTo({
-      left: slideWidth * nextIndex,
-      behavior: behavior || "smooth"
-    });
+    track.classList.toggle("is-dragging", !animate);
+    track.style.transform =
+      `translate3d(-${slideWidth * index}px, 0, 0)`;
 
-    updateIndicators(nextIndex);
+    if (!animate) {
+      requestAnimationFrame(function () {
+        track.classList.remove("is-dragging");
+      });
+    }
+  }
+
+  function moveToSlide(index, animate) {
+    currentIndex = normalizeIndex(index);
+    setTrackPosition(currentIndex, animate !== false);
+    updateIndicators();
   }
 
   function showPreviousSlide() {
-    moveToSlide(currentIndex - 1, "smooth");
+    moveToSlide(currentIndex - 1, true);
   }
 
   function showNextSlide() {
-    moveToSlide(currentIndex + 1, "smooth");
+    moveToSlide(currentIndex + 1, true);
+  }
+
+  function resetTouchState() {
+    isTouching = false;
+    directionLocked = false;
+    isHorizontalGesture = false;
+    touchStartX = 0;
+    touchStartY = 0;
+    touchCurrentX = 0;
+    touchCurrentY = 0;
+    track.classList.remove("is-dragging");
+  }
+
+  function finishTouch() {
+    if (!isTouching) {
+      return;
+    }
+
+    const distanceX = touchCurrentX - touchStartX;
+    const slideWidth = track.getBoundingClientRect().width;
+    const threshold = Math.min(
+      80,
+      Math.max(42, slideWidth * 0.12)
+    );
+
+    if (
+      isHorizontalGesture &&
+      Math.abs(distanceX) >= threshold
+    ) {
+      if (distanceX < 0) {
+        showNextSlide();
+      } else {
+        showPreviousSlide();
+      }
+    } else {
+      setTrackPosition(currentIndex, true);
+    }
+
+    resetTouchState();
   }
 
   if (previousButton) {
@@ -125,31 +176,111 @@ function initializeHomeGallery() {
       const index = Number(dot.dataset.slideIndex);
 
       if (Number.isInteger(index)) {
-        moveToSlide(index, "smooth");
+        moveToSlide(index, true);
       }
     });
   });
 
-  track.addEventListener("scroll", function () {
-    if (scrollFrame !== null) {
-      cancelAnimationFrame(scrollFrame);
-    }
+  track.addEventListener(
+    "touchstart",
+    function (event) {
+      if (event.touches.length !== 1) {
+        return;
+      }
 
-    scrollFrame = requestAnimationFrame(function () {
-      const slideWidth = track.clientWidth;
+      const touch = event.touches[0];
+
+      isTouching = true;
+      directionLocked = false;
+      isHorizontalGesture = false;
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      touchCurrentX = touch.clientX;
+      touchCurrentY = touch.clientY;
+
+      track.classList.add("is-dragging");
+    },
+    { passive: true }
+  );
+
+  track.addEventListener(
+    "touchmove",
+    function (event) {
+      if (!isTouching || event.touches.length !== 1) {
+        return;
+      }
+
+      const touch = event.touches[0];
+
+      touchCurrentX = touch.clientX;
+      touchCurrentY = touch.clientY;
+
+      const distanceX = touchCurrentX - touchStartX;
+      const distanceY = touchCurrentY - touchStartY;
+
+      if (
+        !directionLocked &&
+        (
+          Math.abs(distanceX) >= 7 ||
+          Math.abs(distanceY) >= 7
+        )
+      ) {
+        directionLocked = true;
+        isHorizontalGesture =
+          Math.abs(distanceX) > Math.abs(distanceY);
+      }
+
+      if (!directionLocked || !isHorizontalGesture) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const slideWidth = track.getBoundingClientRect().width;
 
       if (slideWidth <= 0) {
         return;
       }
 
-      const index = Math.round(
-        track.scrollLeft / slideWidth
-      );
+      let adjustedDistanceX = distanceX;
 
-      updateIndicators(index);
-      scrollFrame = null;
-    });
-  }, { passive: true });
+      if (
+        (currentIndex === 0 && distanceX > 0) ||
+        (
+          currentIndex === slides.length - 1 &&
+          distanceX < 0
+        )
+      ) {
+        adjustedDistanceX *= 0.32;
+      }
+
+      const position =
+        -(slideWidth * currentIndex) + adjustedDistanceX;
+
+      track.style.transform =
+        `translate3d(${position}px, 0, 0)`;
+    },
+    { passive: false }
+  );
+
+  track.addEventListener(
+    "touchend",
+    finishTouch,
+    { passive: true }
+  );
+
+  track.addEventListener(
+    "touchcancel",
+    function () {
+      if (!isTouching) {
+        return;
+      }
+
+      setTrackPosition(currentIndex, true);
+      resetTouchState();
+    },
+    { passive: true }
+  );
 
   track.addEventListener("keydown", function (event) {
     if (event.key === "ArrowLeft") {
@@ -164,7 +295,7 @@ function initializeHomeGallery() {
   });
 
   window.addEventListener("resize", function () {
-    moveToSlide(currentIndex, "auto");
+    setTrackPosition(currentIndex, false);
   });
 
   track.setAttribute("tabindex", "0");
@@ -175,7 +306,7 @@ function initializeHomeGallery() {
   );
 
   requestAnimationFrame(function () {
-    moveToSlide(0, "auto");
+    moveToSlide(0, false);
   });
 }
 

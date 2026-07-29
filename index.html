@@ -3,71 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>夜敷 | Official Website</title>
-  <meta name="description" content="夜敷の公式ウェブサイト">
-
-  <!-- 制作中は検索結果に表示しない -->
   <meta name="robots" content="noindex,nofollow,noarchive">
-
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
+  <title>夜敷 | Official Website</title>
+  <meta name="description" content="夜敷の公式ウェブサイト。ライブ情報、作品情報、プロフィールを掲載しています。">
 </head>
-
-<body>
-
+<body id="top">
 <header class="site-header">
-  <a href="#top" class="logo">夜敷</a>
+  <a class="site-logo" href="index.html" aria-label="夜敷 トップページ">夜敷</a>
 
-  <nav>
-    <a href="#news">NEWS</a>
-    <a href="#live">LIVE</a>
-    <a href="#music">MUSIC</a>
-    <a href="#video">VIDEO</a>
-    <a href="#profile">PROFILE</a>
-    <a href="#contact">CONTACT</a>
+  <button class="menu-button" type="button" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開く">
+    <span></span>
+    <span></span>
+  </button>
+
+  <nav id="global-nav" class="global-nav" aria-label="メインメニュー">
+    <a href="index.html">HOME</a>
+    <a href="live.html">LIVE</a>
+    <a href="discography.html">DISCOGRAPHY</a>
+    <a href="profile.html">PROFILE</a>
+    <a href="contact.html">CONTACT</a>
   </nav>
 </header>
 
 <main>
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">OFFICIAL WEBSITE</p>
+      <h1>夜敷</h1>
+      <p class="hero-copy">東京を中心に活動するロックバンド。</p>
+    </div>
+  </section>
 
-<section id="top" class="hero">
-  <div class="hero-content">
-    <p>OFFICIAL WEBSITE</p>
-    <h1>夜敷</h1>
-    <p>Tokyo Alternative Rock Band</p>
-  </div>
-</section>
+  <section class="section">
+    <div class="section-heading">
+      <p class="section-number">01</p>
+      <h2>LATEST</h2>
+    </div>
 
-<section id="news">
-  <h2>NEWS</h2>
-</section>
+    <div class="latest-list">
+      <article class="latest-item">
+        <time datetime="2026-07-29">2026.07.29</time>
+        <p>夜敷 Official Website 制作開始。</p>
+      </article>
+      <article class="latest-item">
+        <time datetime="2026-01-27">2026.01.27</time>
+        <p>楽曲配信開始。</p>
+      </article>
+    </div>
+  </section>
 
-<section id="live">
-  <h2>LIVE</h2>
-</section>
+  <section class="section section-dark">
+    <div class="section-heading">
+      <p class="section-number">02</p>
+      <h2>NEXT LIVE</h2>
+    </div>
 
-<section id="music">
-  <h2>MUSIC</h2>
-</section>
+    <div class="feature-card">
+      <p class="feature-label">COMING SOON</p>
+      <h3>現在お知らせできるライブ情報はありません。</h3>
+      <a class="text-link" href="live.html">VIEW LIVE</a>
+    </div>
+  </section>
 
-<section id="video">
-  <h2>VIDEO</h2>
-</section>
+  <section class="section">
+    <div class="section-heading">
+      <p class="section-number">03</p>
+      <h2>LATEST RELEASE</h2>
+    </div>
 
-<section id="profile">
-  <h2>PROFILE</h2>
-</section>
+    <div class="release-preview">
+      <div class="artwork-placeholder">ARTWORK</div>
+      <div class="release-copy">
+        <p class="feature-label">DIGITAL RELEASE</p>
+        <h3>夜敷</h3>
+        <p>2026.01.27 RELEASE</p>
+        <a class="text-link" href="discography.html">VIEW DISCOGRAPHY</a>
+      </div>
+    </div>
+  </section>
 
-<section id="contact">
-  <h2>CONTACT</h2>
-</section>
+  <section class="section section-dark">
+    <div class="section-heading">
+      <p class="section-number">04</p>
+      <h2>ABOUT</h2>
+    </div>
 
+    <div class="about-preview">
+      <p>
+        東京を中心に活動するロックバンド、夜敷。
+        日常の陰影と違和感を、日本語詞と乾いたバンドサウンドで描く。
+      </p>
+      <a class="text-link" href="profile.html">READ PROFILE</a>
+    </div>
+  </section>
 </main>
 
-<footer>
-  <p>&copy; 夜敷</p>
+<footer class="site-footer">
+  <p>© <span id="current-year"></span> 夜敷</p>
+  <a href="#top">BACK TO TOP</a>
 </footer>
-
 </body>
 </html>

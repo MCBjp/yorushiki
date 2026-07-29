@@ -1,72 +1,50 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const menuButton = document.querySelector(".menu-button");
-  const globalNav = document.querySelector(".global-nav");
-  const navLinks = document.querySelectorAll(".global-nav a");
-  const currentYear = document.querySelector("#current-year");
+  const mobileMenus = document.querySelectorAll(".mobile-menu");
 
-  function closeMenu() {
-    if (!menuButton || !globalNav) return;
-
-    menuButton.setAttribute("aria-expanded", "false");
-    menuButton.setAttribute("aria-label", "メニューを開く");
-    globalNav.classList.remove("is-open");
-    document.body.classList.remove("menu-open");
-  }
-
-  if (menuButton && globalNav) {
-    menuButton.addEventListener("click", () => {
-      const isOpen =
-        menuButton.getAttribute("aria-expanded") === "true";
-
-      menuButton.setAttribute(
-        "aria-expanded",
-        String(!isOpen)
-      );
-
-      menuButton.setAttribute(
-        "aria-label",
-        isOpen ? "メニューを開く" : "メニューを閉じる"
-      );
-
-      globalNav.classList.toggle("is-open", !isOpen);
-      document.body.classList.toggle("menu-open", !isOpen);
+  function closeAllMenus(exceptMenu = null) {
+    mobileMenus.forEach((menu) => {
+      if (menu !== exceptMenu) {
+        menu.removeAttribute("open");
+      }
     });
   }
 
-  navLinks.forEach((link) => {
-    link.addEventListener("click", closeMenu);
+  mobileMenus.forEach((menu) => {
+    const summary = menu.querySelector("summary");
+    const links = menu.querySelectorAll("a");
+
+    summary?.addEventListener("click", () => {
+      closeAllMenus(menu);
+    });
+
+    links.forEach((link) => {
+      link.addEventListener("click", () => {
+        menu.removeAttribute("open");
+      });
+    });
   });
+
+  window.addEventListener(
+    "pointerdown",
+    (event) => {
+      mobileMenus.forEach((menu) => {
+        if (!menu.open) {
+          return;
+        }
+
+        if (menu.contains(event.target)) {
+          return;
+        }
+
+        menu.removeAttribute("open");
+      });
+    },
+    true
+  );
 
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
-      closeMenu();
+      closeAllMenus();
     }
-  });
-
-  if (currentYear) {
-    currentYear.textContent = new Date().getFullYear();
-  }
-
-  const liveTabs = document.querySelectorAll("[data-live-tab]");
-  const livePanels = document.querySelectorAll("[data-live-panel]");
-
-  function activateLiveTab(tabName) {
-    liveTabs.forEach((tab) => {
-      const isActive = tab.dataset.liveTab === tabName;
-
-      tab.classList.toggle("is-active", isActive);
-      tab.setAttribute("aria-selected", String(isActive));
-    });
-
-    livePanels.forEach((panel) => {
-      const isActive = panel.dataset.livePanel === tabName;
-      panel.hidden = !isActive;
-    });
-  }
-
-  liveTabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      activateLiveTab(tab.dataset.liveTab);
-    });
   });
 });

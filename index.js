@@ -45,10 +45,7 @@ function initializeHomeGallery() {
   }
 
   let currentIndex = 0;
-  let pointerStartX = 0;
-  let pointerCurrentX = 0;
-  let isDragging = false;
-  let activePointerId = null;
+  let scrollFrame = null;
 
   function normalizeIndex(index) {
     if (index < 0) {
@@ -62,11 +59,8 @@ function initializeHomeGallery() {
     return index;
   }
 
-  function updateGallery(index) {
+  function updateIndicators(index) {
     currentIndex = normalizeIndex(index);
-
-    track.style.transform =
-      `translateX(-${currentIndex * 100}%)`;
 
     slides.forEach(function (slide, slideIndex) {
       slide.setAttribute(
@@ -88,46 +82,28 @@ function initializeHomeGallery() {
     });
   }
 
+  function moveToSlide(index, behavior) {
+    const nextIndex = normalizeIndex(index);
+    const slideWidth = track.clientWidth;
+
+    if (slideWidth <= 0) {
+      return;
+    }
+
+    track.scrollTo({
+      left: slideWidth * nextIndex,
+      behavior: behavior || "smooth"
+    });
+
+    updateIndicators(nextIndex);
+  }
+
   function showPreviousSlide() {
-    updateGallery(currentIndex - 1);
+    moveToSlide(currentIndex - 1, "smooth");
   }
 
   function showNextSlide() {
-    updateGallery(currentIndex + 1);
-  }
-
-  function resetDragPosition() {
-    track.classList.remove("is-dragging");
-    track.style.transform =
-      `translateX(-${currentIndex * 100}%)`;
-  }
-
-  function finishDrag() {
-    if (!isDragging) {
-      return;
-    }
-
-    const distance = pointerCurrentX - pointerStartX;
-    const threshold = Math.min(
-      90,
-      track.getBoundingClientRect().width * 0.16
-    );
-
-    isDragging = false;
-    activePointerId = null;
-
-    if (Math.abs(distance) >= threshold) {
-      if (distance < 0) {
-        showNextSlide();
-      } else {
-        showPreviousSlide();
-      }
-
-      track.classList.remove("is-dragging");
-      return;
-    }
-
-    resetDragPosition();
+    moveToSlide(currentIndex + 1, "smooth");
   }
 
   if (previousButton) {
@@ -149,61 +125,31 @@ function initializeHomeGallery() {
       const index = Number(dot.dataset.slideIndex);
 
       if (Number.isInteger(index)) {
-        updateGallery(index);
+        moveToSlide(index, "smooth");
       }
     });
   });
 
-  track.addEventListener("pointerdown", function (event) {
-    if (event.pointerType === "mouse" && event.button !== 0) {
-      return;
+  track.addEventListener("scroll", function () {
+    if (scrollFrame !== null) {
+      cancelAnimationFrame(scrollFrame);
     }
 
-    isDragging = true;
-    activePointerId = event.pointerId;
-    pointerStartX = event.clientX;
-    pointerCurrentX = event.clientX;
+    scrollFrame = requestAnimationFrame(function () {
+      const slideWidth = track.clientWidth;
 
-    track.classList.add("is-dragging");
-    track.setPointerCapture(event.pointerId);
-  });
+      if (slideWidth <= 0) {
+        return;
+      }
 
-  track.addEventListener("pointermove", function (event) {
-    if (
-      !isDragging ||
-      event.pointerId !== activePointerId
-    ) {
-      return;
-    }
+      const index = Math.round(
+        track.scrollLeft / slideWidth
+      );
 
-    pointerCurrentX = event.clientX;
-
-    const distance = pointerCurrentX - pointerStartX;
-    const width = track.getBoundingClientRect().width;
-    const basePosition = currentIndex * width;
-    const nextPosition = basePosition - distance;
-
-    track.style.transform =
-      `translateX(-${nextPosition}px)`;
-  });
-
-  track.addEventListener("pointerup", function (event) {
-    if (event.pointerId !== activePointerId) {
-      return;
-    }
-
-    finishDrag();
-  });
-
-  track.addEventListener(
-    "pointercancel",
-    finishDrag
-  );
-
-  track.addEventListener(
-    "lostpointercapture",
-    finishDrag
-  );
+      updateIndicators(index);
+      scrollFrame = null;
+    });
+  }, { passive: true });
 
   track.addEventListener("keydown", function (event) {
     if (event.key === "ArrowLeft") {
@@ -217,6 +163,10 @@ function initializeHomeGallery() {
     }
   });
 
+  window.addEventListener("resize", function () {
+    moveToSlide(currentIndex, "auto");
+  });
+
   track.setAttribute("tabindex", "0");
   track.setAttribute("role", "region");
   track.setAttribute(
@@ -224,7 +174,9 @@ function initializeHomeGallery() {
     "アーティスト写真スライダー"
   );
 
-  updateGallery(0);
+  requestAnimationFrame(function () {
+    moveToSlide(0, "auto");
+  });
 }
 
 async function fetchJson(file) {

@@ -4,67 +4,62 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex,nofollow,noarchive">
+
   <title>LIVE | 夜敷 Official Website</title>
   <meta name="description" content="夜敷のライブスケジュールと過去の出演情報。">
-  <link rel="stylesheet" href="style.css?v=10">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="common.js" defer></script>
 </head>
+
 <body id="top">
-<header class="site-header">
-  <div class="header-inner">
-    <a class="site-logo" href="index.html" aria-label="夜敷 トップページ">夜敷</a>
 
-    <nav class="desktop-nav" aria-label="メインメニュー">
-      <a href="index.html">HOME</a>
-      <a href="live.html">LIVE</a>
-      <a href="discography.html">DISCOGRAPHY</a>
-      <a href="profile.html">PROFILE</a>
-      <a href="contact.html">CONTACT</a>
-    </nav>
-
-    <details class="mobile-menu">
-      <summary aria-label="メニューを開閉">
-        <span class="menu-line"></span>
-        <span class="menu-line"></span>
-      </summary>
-
-      <nav class="mobile-nav" aria-label="スマートフォン用メニュー">
-        <a href="index.html">HOME</a>
-        <a href="live.html">LIVE</a>
-        <a href="discography.html">DISCOGRAPHY</a>
-        <a href="profile.html">PROFILE</a>
-        <a href="contact.html">CONTACT</a>
-      </nav>
-    </details>
-  </div>
-</header>
+<header id="site-header" class="site-header"></header>
 
 <main class="subpage">
-  <section class="page-hero">
-    <div class="container">
+
+  <section class="page-header">
+    <div>
       <p class="eyebrow">YORUSHIKI</p>
       <h1>LIVE</h1>
     </div>
   </section>
 
-  <section class="section live-section">
-    <div class="container">
-      <input class="tab-input" type="radio" name="live-tab" id="tab-upcoming" checked>
-      <input class="tab-input" type="radio" name="live-tab" id="tab-past">
+  <section class="section">
 
-      <div class="tab-bar" aria-label="ライブ情報">
-        <label for="tab-upcoming">UPCOMING</label>
-        <label for="tab-past">PAST</label>
-      </div>
+    <input
+      class="live-tab-radio"
+      type="radio"
+      name="live-tab"
+      id="live-upcoming"
+      checked
+    >
 
-      <div class="tab-panels">
-        <section class="tab-panel panel-upcoming">
+    <input
+      class="live-tab-radio"
+      type="radio"
+      name="live-tab"
+      id="live-past"
+    >
+
+    <div class="live-tabs" aria-label="ライブ情報">
+      <label for="live-upcoming">UPCOMING</label>
+      <label for="live-past">PAST</label>
+    </div>
+
+    <div class="live-panels">
+
+      <section class="live-panel live-panel-upcoming">
+        <div class="live-card-list">
+
           <article class="live-card">
             <div class="live-card-top">
               <time datetime="2026-09-18">
-                <span class="date-year">2026</span>
-                <span class="date-main">09.18</span>
+                <span class="live-date-year">2026</span>
+                <span class="live-date-main">09.18</span>
               </time>
-              <span class="status-badge">UPCOMING</span>
+
+              <span class="live-badge">UPCOMING</span>
             </div>
 
             <h2>下北沢ERA</h2>
@@ -74,28 +69,37 @@
                 <dt>OPEN / START</dt>
                 <dd>18:30 / 19:00</dd>
               </div>
+
               <div>
                 <dt>ACT</dt>
                 <dd>夜敷 / 出演者名 / 出演者名</dd>
               </div>
+
               <div>
                 <dt>TICKET</dt>
                 <dd>ADV ¥2,500 / DOOR ¥3,000</dd>
               </div>
             </dl>
 
-            <a class="pill-link" href="contact.html">TICKET / CONTACT</a>
+            <a class="live-contact-link" href="contact.html">
+              TICKET / CONTACT
+            </a>
           </article>
-        </section>
 
-        <section class="tab-panel panel-past">
+        </div>
+      </section>
+
+      <section class="live-panel live-panel-past">
+        <div class="live-card-list">
+
           <article class="live-card">
             <div class="live-card-top">
               <time datetime="2025-05-10">
-                <span class="date-year">2025</span>
-                <span class="date-main">05.10</span>
+                <span class="live-date-year">2025</span>
+                <span class="live-date-main">05.10</span>
               </time>
-              <span class="status-badge status-past">PAST</span>
+
+              <span class="live-badge live-badge-past">PAST</span>
             </div>
 
             <h2>吉祥寺 BLACK &amp; BLUE</h2>
@@ -105,23 +109,24 @@
                 <dt>EVENT</dt>
                 <dd>イベント名をここに記載</dd>
               </div>
+
               <div>
                 <dt>ACT</dt>
                 <dd>夜敷 / 出演者名 / 出演者名</dd>
               </div>
             </dl>
           </article>
-        </section>
-      </div>
+
+        </div>
+      </section>
+
     </div>
+
   </section>
+
 </main>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <p>© 2026 夜敷</p>
-    <a href="#top">BACK TO TOP</a>
-  </div>
-</footer>
+<footer id="site-footer" class="site-footer"></footer>
+
 </body>
 </html>

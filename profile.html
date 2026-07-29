@@ -4,79 +4,68 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex,nofollow,noarchive">
-
   <title>PROFILE | 夜敷 Official Website</title>
   <meta name="description" content="夜敷のプロフィールとメンバー情報。">
-
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
-
 <body id="top">
-
 <header class="site-header">
-  <a class="site-logo" href="index.html" aria-label="夜敷 トップページ">夜敷</a>
+  <div class="header-inner">
+    <a class="site-logo" href="index.html" aria-label="夜敷 トップページ">夜敷</a>
 
-  <nav class="desktop-nav" aria-label="メインメニュー">
-    <a href="index.html">HOME</a>
-    <a href="live.html">LIVE</a>
-    <a href="discography.html">DISCOGRAPHY</a>
-    <a href="profile.html">PROFILE</a>
-    <a href="contact.html">CONTACT</a>
-  </nav>
-
-  <details class="mobile-menu">
-    <summary aria-label="メニューを開く">
-      <span></span>
-      <span></span>
-    </summary>
-
-    <nav class="mobile-nav" aria-label="スマートフォン用メニュー">
+    <nav class="desktop-nav" aria-label="メインメニュー">
       <a href="index.html">HOME</a>
       <a href="live.html">LIVE</a>
       <a href="discography.html">DISCOGRAPHY</a>
       <a href="profile.html">PROFILE</a>
       <a href="contact.html">CONTACT</a>
     </nav>
-  </details>
+
+    <details class="mobile-menu">
+      <summary aria-label="メニューを開閉">
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+      </summary>
+
+      <nav class="mobile-nav" aria-label="スマートフォン用メニュー">
+        <a href="index.html">HOME</a>
+        <a href="live.html">LIVE</a>
+        <a href="discography.html">DISCOGRAPHY</a>
+        <a href="profile.html">PROFILE</a>
+        <a href="contact.html">CONTACT</a>
+      </nav>
+    </details>
+  </div>
 </header>
 
 <main class="subpage">
-  <section class="page-header">
-    <div class="page-header-inner">
+  <section class="page-hero">
+    <div class="container">
       <p class="eyebrow">YORUSHIKI</p>
       <h1>PROFILE</h1>
     </div>
   </section>
 
   <section class="section">
-    <div class="profile-layout">
+    <div class="container profile-layout">
       <div class="photo-placeholder">PHOTO</div>
 
       <div class="profile-copy">
         <h2>夜敷</h2>
+        <p>東京を中心に活動するロックバンド。日常の陰影と違和感を、日本語詞と乾いたバンドサウンドで描く。</p>
+        <p>結成時期、活動歴、メンバー構成、音楽性などの詳細は、内容が固まった段階で追記します。</p>
 
-        <p>
-          東京を中心に活動するロックバンド。
-          日常の陰影と違和感を、日本語詞と乾いたバンドサウンドで描く。
-        </p>
-
-        <p>
-          結成時期、活動歴、メンバー構成、音楽性などの詳細は、
-          内容が固まった段階で追記します。
-        </p>
-
-        <div class="member-list">
-          <div class="member-item">
-            <p class="feature-label">MEMBER</p>
+        <div class="member-grid">
+          <article class="member-card">
+            <p class="small-label">MEMBER</p>
             <h3>名前</h3>
             <p>Part</p>
-          </div>
-
-          <div class="member-item">
-            <p class="feature-label">MEMBER</p>
+          </article>
+          <article class="member-card">
+            <p class="small-label">MEMBER</p>
             <h3>名前</h3>
             <p>Part</p>
-          </div>
+          </article>
         </div>
       </div>
     </div>
@@ -84,9 +73,10 @@
 </main>
 
 <footer class="site-footer">
-  <p>© 2026 夜敷</p>
-  <a href="#top">BACK TO TOP</a>
+  <div class="footer-inner">
+    <p>© 2026 夜敷</p>
+    <a href="#top">BACK TO TOP</a>
+  </div>
 </footer>
-
 </body>
 </html>

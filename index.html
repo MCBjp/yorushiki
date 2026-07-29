@@ -7,44 +7,11 @@
   <title>夜敷 | Official Website</title>
   <meta name="description" content="夜敷の公式ウェブサイト。ライブ情報、作品情報、プロフィールを掲載しています。">
   <link rel="stylesheet" href="style.css?v=10">
-  <script src="script.js?v=2" defer></script>
+  <script src="common.js" defer></script>
 </head>
 <body id="top">
-<header class="site-header">
-  <div class="header-inner">
-    <a class="site-logo" href="index.html" aria-label="夜敷 トップページ">夜敷</a>
 
-    <nav class="desktop-nav" aria-label="メインメニュー">
-      <a href="index.html">HOME</a>
-      <a href="live.html">LIVE</a>
-      <a href="discography.html">DISCOGRAPHY</a>
-      <a href="profile.html">PROFILE</a>
-      <a href="contact.html">CONTACT</a>
-    </nav>
-
-    <details class="mobile-menu">
-      <summary aria-label="メニューを開閉">
-        <span class="menu-line"></span>
-        <span class="menu-line"></span>
-      </summary>
-
-      <button
-        class="menu-dismiss"
-        type="button"
-        aria-label="メニューを閉じる"
-        onclick="this.closest('.mobile-menu').removeAttribute('open')"
-      ></button>
-
-      <nav class="mobile-nav" aria-label="スマートフォン用メニュー">
-        <a href="index.html">HOME</a>
-        <a href="live.html">LIVE</a>
-        <a href="discography.html">DISCOGRAPHY</a>
-        <a href="profile.html">PROFILE</a>
-        <a href="contact.html">CONTACT</a>
-      </nav>
-    </details>
-  </div>
-</header>
+<header id="site-header" class="site-header"></header>
 
 <main>
   <section class="hero">
@@ -56,7 +23,7 @@
   <section class="section">
     <div class="container">
       <div class="section-heading">
-        <span></span>
+        <span>01</span>
         <h2>LATEST</h2>
       </div>
 
@@ -65,6 +32,7 @@
           <time datetime="2026-07-29">2026.07.29</time>
           <p>夜敷 Official Website 制作開始。</p>
         </article>
+
         <article class="latest-item">
           <time datetime="2026-01-27">2026.01.27</time>
           <p>楽曲配信開始。</p>
@@ -76,7 +44,7 @@
   <section class="section section-alt">
     <div class="container">
       <div class="section-heading">
-        <span></span>
+        <span>02</span>
         <h2>NEXT LIVE</h2>
       </div>
 
@@ -91,12 +59,13 @@
   <section class="section">
     <div class="container">
       <div class="section-heading">
-        <span></span>
+        <span>03</span>
         <h2>LATEST RELEASE</h2>
       </div>
 
       <div class="release-preview">
         <div class="artwork-placeholder">ARTWORK</div>
+
         <div>
           <p class="small-label">DIGITAL RELEASE</p>
           <h3 class="release-title">夜敷</h3>
@@ -108,11 +77,7 @@
   </section>
 </main>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <p>© 2026 夜敷</p>
-    <a href="#top">BACK TO TOP</a>
-  </div>
-</footer>
+<footer id="site-footer" class="site-footer"></footer>
+
 </body>
 </html>

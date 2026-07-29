@@ -1,50 +1,33 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const mobileMenus = document.querySelectorAll(".mobile-menu");
+document.addEventListener("DOMContentLoaded", function () {
+  var menu = document.querySelector(".mobile-menu");
 
-  function closeAllMenus(exceptMenu = null) {
-    mobileMenus.forEach((menu) => {
-      if (menu !== exceptMenu) {
-        menu.removeAttribute("open");
-      }
-    });
+  if (!menu) {
+    return;
   }
 
-  mobileMenus.forEach((menu) => {
-    const summary = menu.querySelector("summary");
-    const links = menu.querySelectorAll("a");
+  function closeMenu() {
+    menu.open = false;
+  }
 
-    summary?.addEventListener("click", () => {
-      closeAllMenus(menu);
-    });
+  document.addEventListener("touchstart", function (event) {
+    if (menu.open && !menu.contains(event.target)) {
+      closeMenu();
+    }
+  }, true);
 
-    links.forEach((link) => {
-      link.addEventListener("click", () => {
-        menu.removeAttribute("open");
-      });
-    });
+  document.addEventListener("mousedown", function (event) {
+    if (menu.open && !menu.contains(event.target)) {
+      closeMenu();
+    }
+  }, true);
+
+  menu.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", closeMenu);
   });
 
-  window.addEventListener(
-    "pointerdown",
-    (event) => {
-      mobileMenus.forEach((menu) => {
-        if (!menu.open) {
-          return;
-        }
-
-        if (menu.contains(event.target)) {
-          return;
-        }
-
-        menu.removeAttribute("open");
-      });
-    },
-    true
-  );
-
-  window.addEventListener("keydown", (event) => {
+  document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
-      closeAllMenus();
+      closeMenu();
     }
   });
 });

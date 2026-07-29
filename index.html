@@ -1,104 +1,1071 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow,noarchive">
+@charset "UTF-8";
 
-  <title>夜敷 | Official Website</title>
-  <meta
-    name="description"
-    content="夜敷の公式ウェブサイト。ライブ情報、作品情報、プロフィールを掲載しています。"
-  >
+:root {
+  --bg: #0e0f12;
+  --bg-alt: #17191e;
+  --card: #1b1e24;
+  --text: #f3f3f0;
+  --muted: #9ea3ad;
+  --line: rgba(255, 255, 255, 0.14);
+  --accent: #3868aa;
+  --header-height: 72px;
+  --content-width: 1120px;
+  --side: clamp(20px, 5vw, 72px);
+}
 
-  <link rel="stylesheet" href="style.css?v=11">
-  <script src="common.js" defer></script>
-</head>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-<body id="top">
+html {
+  scroll-behavior: smooth;
+}
 
-<header id="site-header" class="site-header"></header>
+body {
+  margin: 0;
+  overflow-x: hidden;
+  color: var(--text);
+  background: var(--bg);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Hiragino Sans",
+    "Yu Gothic",
+    "YuGothic",
+    sans-serif;
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+}
 
-<main class="home-main">
+a {
+  color: inherit;
+}
 
-  <section class="section home-section home-latest">
-    <div class="container">
+.container {
+  width: min(100%, var(--content-width));
+  margin-inline: auto;
+}
 
-      <div class="section-heading home-heading">
-        <h1>最新情報</h1>
-      </div>
+/* ===== HEADER ===== */
 
-      <div class="latest-list">
+.site-header {
+  position: fixed;
+  z-index: 100;
+  inset: 0 0 auto 0;
+  height: var(--header-height);
+  padding-inline: var(--side);
+  background: #07080a;
+}
 
-        <article class="latest-item">
-          <time datetime="2026-07-29">2026.07.29</time>
+.header-inner {
+  width: min(100%, var(--content-width));
+  height: 100%;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-          <div class="latest-content">
-            <p>夜敷 Official Website 制作開始。</p>
-          </div>
-        </article>
+.site-logo {
+  color: #fff;
+  text-decoration: none;
+  font-family: serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+}
 
-        <article class="latest-item">
-          <time datetime="2026-01-27">2026.01.27</time>
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2.4vw, 34px);
+}
 
-          <div class="latest-content">
-            <p>楽曲配信開始。</p>
-          </div>
-        </article>
+.desktop-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.17em;
+  opacity: 0.78;
+}
 
-      </div>
+.desktop-nav a:hover {
+  opacity: 1;
+}
 
-    </div>
-  </section>
+.mobile-menu {
+  display: none;
+}
 
-  <section class="section section-alt home-section home-live">
-    <div class="container">
+.menu-dismiss {
+  display: none;
+}
 
-      <div class="section-heading home-heading">
-        <h2>次回ライブ</h2>
-      </div>
+/* ===== HOME ===== */
 
-      <div class="feature-card home-live-card">
-        <p class="small-label">COMING SOON</p>
-        <p class="home-live-message">
-          現在、出演予定のライブはありません。
-        </p>
-      </div>
+.home-main {
+  padding-top: var(--header-height);
+}
 
-    </div>
-  </section>
+.section {
+  padding: clamp(72px, 10vw, 130px) var(--side);
+}
 
-  <section class="section home-section home-release">
-    <div class="container">
+.home-section {
+  padding-top: clamp(54px, 7vw, 86px);
+  padding-bottom: clamp(58px, 8vw, 94px);
+}
 
-      <div class="section-heading home-heading">
-        <h2>最新作品</h2>
-      </div>
+.section-alt {
+  background: var(--bg-alt);
+}
 
-      <div class="release-preview">
+.section-heading {
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--line);
+}
 
-        <div class="artwork-placeholder">
-          ARTWORK
-        </div>
+.section-heading h1,
+.section-heading h2 {
+  margin: 0 0 18px;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.1em;
+}
 
-        <div class="release-copy">
-          <p class="small-label">DIGITAL RELEASE</p>
-          <h3 class="release-title">夜敷</h3>
-          <p class="release-date">2026.01.27 RELEASE</p>
+.latest-list {
+  border-top: 0;
+}
 
-          <a class="pill-link" href="discography.html">
-            作品情報を見る
-          </a>
-        </div>
+.latest-item {
+  padding: 22px 0;
+  display: grid;
+  grid-template-columns: 145px minmax(0, 1fr);
+  gap: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-      </div>
+.latest-item time {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
 
-    </div>
-  </section>
+.latest-item p {
+  margin: 0;
+}
 
-</main>
+.small-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+}
 
-<footer id="site-footer" class="site-footer"></footer>
+.feature-card {
+  padding: clamp(28px, 5vw, 58px);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+}
 
-</body>
-</html>
+.feature-card h3 {
+  margin: 8px 0 26px;
+  font-size: clamp(1.3rem, 4vw, 2.4rem);
+  font-weight: 500;
+}
+
+.inline-link {
+  display: inline-block;
+  margin-top: 18px;
+  text-underline-offset: 7px;
+  font-size: 0.73rem;
+  letter-spacing: 0.17em;
+}
+
+.release-preview {
+  display: grid;
+  grid-template-columns: minmax(260px, 440px) minmax(0, 1fr);
+  gap: clamp(36px, 8vw, 96px);
+  align-items: center;
+}
+
+.artwork-placeholder {
+  width: 100%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(56, 104, 170, 0.22),
+      transparent 46%
+    ),
+    #15171b;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+}
+
+.release-title {
+  margin: 8px 0 16px;
+  font-family: serif;
+  font-size: clamp(2.5rem, 6vw, 4.8rem);
+  font-weight: 500;
+  letter-spacing: 0.07em;
+}
+
+/* ===== OTHER PAGES ===== */
+
+.subpage {
+  padding-top: var(--header-height);
+}
+
+.page-hero {
+  padding:
+    clamp(86px, 12vw, 145px)
+    var(--side)
+    clamp(58px, 8vw, 95px);
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(56, 104, 170, 0.18),
+      transparent 36%
+    ),
+    var(--bg-alt);
+}
+
+.page-hero h1 {
+  max-width: 100%;
+  margin: 10px 0 0;
+  font-size: clamp(3rem, 9vw, 7rem);
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  overflow-wrap: anywhere;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+}
+
+.discography-item,
+.profile-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 440px) minmax(0, 1fr);
+  gap: clamp(36px, 8vw, 96px);
+  align-items: center;
+}
+
+.photo-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(56, 104, 170, 0.22),
+      transparent 46%
+    ),
+    #15171b;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+}
+
+.discography-copy,
+.profile-copy {
+  min-width: 0;
+}
+
+.discography-copy h2,
+.profile-copy h2 {
+  margin: 8px 0 16px;
+  font-family: serif;
+  font-size: clamp(2.5rem, 6vw, 4.8rem);
+  font-weight: 500;
+  letter-spacing: 0.07em;
+}
+
+.discography-copy p,
+.profile-copy p,
+.contact-card p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.release-date,
+.note {
+  color: var(--muted) !important;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+}
+
+.pill-link {
+  display: inline-flex;
+  min-height: 48px;
+  margin-top: 28px;
+  padding: 10px 24px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.member-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.member-card,
+.contact-card {
+  padding: clamp(28px, 5vw, 58px);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+}
+
+.member-card {
+  padding: 22px;
+  border-radius: 14px;
+}
+
+.member-card h3,
+.member-card p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.contact-card {
+  max-width: 820px;
+}
+
+.contact-mail {
+  display: inline-block;
+  margin-top: 22px;
+  font-size: clamp(1.05rem, 3vw, 1.9rem);
+  text-underline-offset: 8px;
+  word-break: break-all;
+}
+
+/* ===== LIVE ===== */
+
+.live-section {
+  position: relative;
+}
+
+.tab-input {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  opacity: 0 !important;
+}
+
+.tab-bar {
+  width: min(100%, 760px);
+  margin: 0 auto clamp(38px, 6vw, 60px);
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 19px;
+  background: var(--bg-alt);
+}
+
+.tab-bar label {
+  min-height: 56px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+#tab-upcoming:checked ~ .tab-bar label[for="tab-upcoming"],
+#tab-past:checked ~ .tab-bar label[for="tab-past"] {
+  color: #fff;
+  background: var(--accent);
+}
+
+.tab-panel {
+  display: none;
+}
+
+#tab-upcoming:checked ~ .tab-panels .panel-upcoming {
+  display: block;
+}
+
+#tab-past:checked ~ .tab-panels .panel-past {
+  display: block;
+}
+
+.live-card {
+  padding: clamp(26px, 5vw, 48px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(56, 104, 170, 0.08),
+      transparent 42%
+    ),
+    var(--card);
+}
+
+.live-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.live-card time {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: var(--muted);
+}
+
+.date-year {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+}
+
+.date-main {
+  color: var(--text);
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.status-badge {
+  flex-shrink: 0;
+  padding: 8px 15px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.status-past {
+  color: #c5c8cf;
+  background: #353840;
+}
+
+.live-card h2 {
+  margin: 26px 0 34px;
+  font-size: clamp(2rem, 7vw, 4.2rem);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+}
+
+.live-details {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.live-details div {
+  padding: 21px 0;
+  display: grid;
+  grid-template-columns: 165px minmax(0, 1fr);
+  gap: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.live-details dt {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+.live-details dd {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* ===== FOOTER ===== */
+
+.site-footer {
+  padding: 26px var(--side);
+  border-top: 1px solid var(--line);
+  background: #07080a;
+}
+
+.footer-inner {
+  width: min(100%, var(--content-width));
+  margin-inline: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.11em;
+}
+
+.footer-inner p {
+  margin: 0;
+}
+
+.footer-inner a {
+  text-decoration: none;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 780px) {
+  :root {
+    --header-height: 64px;
+  }
+
+  .site-logo {
+    font-size: 1.3rem;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-menu {
+    position: relative;
+    display: block;
+  }
+
+  .mobile-menu summary {
+    position: relative;
+    z-index: 120;
+    width: 38px;
+    height: 38px;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .mobile-menu[open] .menu-dismiss {
+    position: fixed;
+    z-index: 105;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    display: block;
+    border: 0;
+    appearance: none;
+    background: transparent;
+    cursor: default;
+  }
+
+  .mobile-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-menu summary::marker {
+    content: "";
+  }
+
+  .menu-line {
+    position: absolute;
+    right: 1px;
+    width: 25px;
+    height: 1px;
+    background: #fff;
+    transition:
+      top 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .menu-line:first-child {
+    top: 14px;
+  }
+
+  .menu-line:last-child {
+    top: 23px;
+  }
+
+  .mobile-menu[open] .menu-line:first-child {
+    top: 19px;
+    transform: rotate(45deg);
+  }
+
+  .mobile-menu[open] .menu-line:last-child {
+    top: 19px;
+    transform: rotate(-45deg);
+  }
+
+  .mobile-nav {
+    position: absolute;
+    z-index: 110;
+    top: 46px;
+    right: 0;
+    width: min(62vw, 220px);
+    padding: 4px 12px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: #050607;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+  }
+
+  .mobile-nav a {
+    padding: 10px 2px;
+    border-bottom: 1px solid var(--line);
+    color: #fff;
+    text-align: right;
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.13em;
+  }
+
+  .mobile-nav a:last-child {
+    border-bottom: 0;
+  }
+
+  .home-section {
+    padding-top: 46px;
+    padding-bottom: 58px;
+  }
+
+  .section-heading {
+    margin-bottom: 24px;
+  }
+
+  .section-heading h1,
+  .section-heading h2 {
+    margin-bottom: 15px;
+    font-size: clamp(2rem, 11vw, 3.2rem);
+  }
+
+  .latest-item {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 20px 0;
+  }
+
+  .release-preview,
+  .discography-item,
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .member-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2.4rem, 11vw, 4.8rem);
+    letter-spacing: 0.035em;
+  }
+
+  .tab-bar {
+    border-radius: 16px;
+  }
+
+  .tab-bar label {
+    min-height: 52px;
+    padding-inline: 7px;
+    border-radius: 11px;
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+  }
+
+  .live-card {
+    border-radius: 19px;
+  }
+
+  .live-details div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== SHARED TEMPLATE COMPATIBILITY ===== */
+
+/* Page heading used by the shared HTML files */
+.page-header {
+  padding:
+    clamp(86px, 12vw, 145px)
+    var(--side)
+    clamp(58px, 8vw, 95px);
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(56, 104, 170, 0.18),
+      transparent 36%
+    ),
+    var(--bg-alt);
+}
+
+.page-header > div,
+.page-header-inner {
+  width: min(100%, var(--content-width));
+  margin-inline: auto;
+}
+
+.page-header h1 {
+  max-width: 100%;
+  margin: 10px 0 0;
+  font-size: clamp(3rem, 9vw, 7rem);
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  overflow-wrap: anywhere;
+}
+
+/* Discography */
+.feature-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+}
+
+.button-row {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.button {
+  min-height: 48px;
+  padding: 10px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.button[aria-disabled="true"] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Profile */
+.profile-image {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(56, 104, 170, 0.22),
+      transparent 46%
+    ),
+    #15171b;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+}
+
+.profile-content {
+  min-width: 0;
+}
+
+.profile-content h2 {
+  margin: 8px 0 16px;
+  font-family: serif;
+  font-size: clamp(2.5rem, 6vw, 4.8rem);
+  font-weight: 500;
+  letter-spacing: 0.07em;
+}
+
+.profile-content > p,
+.contact-box > p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.profile-info {
+  margin: 32px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.profile-info dt,
+.profile-info dd {
+  margin: 0;
+}
+
+.profile-info dt {
+  padding-top: 16px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.profile-info dd {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Contact */
+.contact-box {
+  width: min(100%, 820px);
+  padding: clamp(28px, 5vw, 58px);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+}
+
+.contact-mail {
+  color: var(--text) !important;
+  font-size: clamp(1.05rem, 3vw, 1.9rem);
+  letter-spacing: 0.04em;
+  word-break: break-all;
+}
+
+/* Live page class names used by live_common.html */
+.live-tab-radio {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  opacity: 0 !important;
+}
+
+.live-tabs {
+  width: min(100%, 760px);
+  margin: 0 auto clamp(38px, 6vw, 60px);
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 19px;
+  background: var(--bg-alt);
+}
+
+.live-tabs label {
+  min-height: 56px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+#live-upcoming:checked ~ .live-tabs label[for="live-upcoming"],
+#live-past:checked ~ .live-tabs label[for="live-past"] {
+  color: #fff;
+  background: var(--accent);
+}
+
+.live-panel {
+  display: none;
+}
+
+#live-upcoming:checked ~ .live-panels .live-panel-upcoming {
+  display: block;
+}
+
+#live-past:checked ~ .live-panels .live-panel-past {
+  display: block;
+}
+
+.live-card-list {
+  width: min(100%, var(--content-width));
+  margin-inline: auto;
+}
+
+.live-date-year {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+}
+
+.live-date-main {
+  color: var(--text);
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.live-badge {
+  flex-shrink: 0;
+  padding: 8px 15px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.live-badge-past {
+  color: #c5c8cf;
+  background: #353840;
+}
+
+.live-contact-link {
+  margin-top: 28px;
+  min-height: 48px;
+  padding: 10px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+@media (max-width: 780px) {
+  .page-header h1 {
+    font-size: clamp(2.4rem, 11vw, 4.8rem);
+    letter-spacing: 0.035em;
+  }
+
+  .live-tabs {
+    border-radius: 16px;
+  }
+
+  .live-tabs label {
+    min-height: 52px;
+    padding-inline: 7px;
+    border-radius: 11px;
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+  }
+}
+
+/* ===== Home redesign additions ===== */
+
+.home-heading span,
+.home-heading .eyebrow {
+  display: none;
+}
+
+.home-heading h1,
+.home-heading h2 {
+  margin: 0 0 18px;
+  font-size: clamp(1.9rem, 6vw, 2.8rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+}
+
+.home-heading {
+  margin-bottom: 34px;
+  border-bottom: 1px solid var(--line);
+}
+
+.home-latest .latest-item {
+  grid-template-columns: 170px minmax(0,1fr);
+  align-items: center;
+}
+
+.latest-content{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.home-live-card{
+  max-width:100%;
+}
+
+.home-live-message{
+  margin:18px 0 0;
+  font-size:clamp(1.2rem,3vw,2rem);
+  line-height:1.6;
+}
+
+.release-copy .release-date{
+  margin-top:10px;
+}
+
+@media (max-width:780px){
+
+  .home-section{
+    padding-top:52px;
+    padding-bottom:60px;
+  }
+
+  .home-heading{
+    margin-bottom:26px;
+  }
+
+  .home-heading h1,
+  .home-heading h2{
+    font-size:2.2rem;
+    letter-spacing:0.02em;
+  }
+
+  .home-latest .latest-item{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+
+  .home-live-message{
+    font-size:1.8rem;
+  }
+
+  .release-preview{
+    gap:28px;
+  }
+}

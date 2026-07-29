@@ -8,8 +8,9 @@
   <title>LIVE | 夜敷 Official Website</title>
   <meta name="description" content="夜敷のライブスケジュールと過去の出演情報。">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=11">
   <script src="common.js" defer></script>
+  <script src="live.js?v=1" defer></script>
 </head>
 
 <body id="top">
@@ -50,73 +51,14 @@
     <div class="live-panels">
 
       <section class="live-panel live-panel-upcoming">
-        <div class="live-card-list">
-
-          <article class="live-card">
-            <div class="live-card-top">
-              <time datetime="2026-09-18">
-                <span class="live-date-year">2026</span>
-                <span class="live-date-main">09.18</span>
-              </time>
-
-              <span class="live-badge">UPCOMING</span>
-            </div>
-
-            <h2>下北沢ERA</h2>
-
-            <dl class="live-details">
-              <div>
-                <dt>OPEN / START</dt>
-                <dd>18:30 / 19:00</dd>
-              </div>
-
-              <div>
-                <dt>ACT</dt>
-                <dd>夜敷 / 出演者名 / 出演者名</dd>
-              </div>
-
-              <div>
-                <dt>TICKET</dt>
-                <dd>ADV ¥2,500 / DOOR ¥3,000</dd>
-              </div>
-            </dl>
-
-            <a class="live-contact-link" href="contact.html">
-              TICKET / CONTACT
-            </a>
-          </article>
-
+        <div id="live-upcoming-list" class="live-card-list">
+          <div class="empty">ライブ情報を読み込んでいます。</div>
         </div>
       </section>
 
       <section class="live-panel live-panel-past">
-        <div class="live-card-list">
-
-          <article class="live-card">
-            <div class="live-card-top">
-              <time datetime="2025-05-10">
-                <span class="live-date-year">2025</span>
-                <span class="live-date-main">05.10</span>
-              </time>
-
-              <span class="live-badge live-badge-past">PAST</span>
-            </div>
-
-            <h2>吉祥寺 BLACK &amp; BLUE</h2>
-
-            <dl class="live-details">
-              <div>
-                <dt>EVENT</dt>
-                <dd>イベント名をここに記載</dd>
-              </div>
-
-              <div>
-                <dt>ACT</dt>
-                <dd>夜敷 / 出演者名 / 出演者名</dd>
-              </div>
-            </dl>
-          </article>
-
+        <div id="live-past-list" class="live-card-list">
+          <div class="empty">ライブ情報を読み込んでいます。</div>
         </div>
       </section>
 

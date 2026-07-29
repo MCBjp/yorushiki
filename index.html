@@ -1,117 +1,37 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow,noarchive">
+document.addEventListener("DOMContentLoaded", () => {
+  const mobileMenus = document.querySelectorAll(".mobile-menu");
 
-  <title>夜敷 | Official Website</title>
-  <meta
-    name="description"
-    content="夜敷の公式ウェブサイト。ライブ情報、作品情報、プロフィールを掲載しています。"
-  >
+  mobileMenus.forEach((menu) => {
+    const menuLinks = menu.querySelectorAll("a");
 
-  <link rel="stylesheet" href="style.css?v=11">
-</head>
+    menuLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        menu.removeAttribute("open");
+      });
+    });
+  });
 
-<body id="top">
+  document.addEventListener("click", (event) => {
+    mobileMenus.forEach((menu) => {
+      if (!menu.open) {
+        return;
+      }
 
-<header class="site-header">
-  <div class="header-inner">
-    <a class="site-logo" href="index.html" aria-label="夜敷 トップページ">
-      夜敷
-    </a>
+      if (menu.contains(event.target)) {
+        return;
+      }
 
-    <nav class="desktop-nav" aria-label="メインメニュー">
-      <a href="index.html">HOME</a>
-      <a href="live.html">LIVE</a>
-      <a href="discography.html">DISCOGRAPHY</a>
-      <a href="profile.html">PROFILE</a>
-      <a href="contact.html">CONTACT</a>
-    </nav>
+      menu.removeAttribute("open");
+    });
+  });
 
-    <details class="mobile-menu">
-      <summary aria-label="メニューを開閉">
-        <span class="menu-line"></span>
-        <span class="menu-line"></span>
-      </summary>
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") {
+      return;
+    }
 
-      <nav class="mobile-nav" aria-label="スマートフォン用メニュー">
-        <a href="index.html">HOME</a>
-        <a href="live.html">LIVE</a>
-        <a href="discography.html">DISCOGRAPHY</a>
-        <a href="profile.html">PROFILE</a>
-        <a href="contact.html">CONTACT</a>
-      </nav>
-    </details>
-  </div>
-</header>
-
-<main class="home-main">
-
-  <section class="section home-section">
-    <div class="container">
-      <div class="section-heading">
-        <h1>LATEST</h1>
-      </div>
-
-      <div class="latest-list">
-        <article class="latest-item">
-          <time datetime="2026-07-29">2026.07.29</time>
-          <p>夜敷 Official Website 制作開始。</p>
-        </article>
-
-        <article class="latest-item">
-          <time datetime="2026-01-27">2026.01.27</time>
-          <p>楽曲配信開始。</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-alt home-section">
-    <div class="container">
-      <div class="section-heading">
-        <h2>NEXT LIVE</h2>
-      </div>
-
-      <div class="feature-card">
-        <p class="small-label">COMING SOON</p>
-        <h3>現在お知らせできるライブ情報はありません。</h3>
-        <a class="inline-link" href="live.html">VIEW LIVE</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section home-section">
-    <div class="container">
-      <div class="section-heading">
-        <h2>LATEST RELEASE</h2>
-      </div>
-
-      <div class="release-preview">
-        <div class="artwork-placeholder">ARTWORK</div>
-
-        <div>
-          <p class="small-label">DIGITAL RELEASE</p>
-          <h3 class="release-title">夜敷</h3>
-          <p>2026.01.27 RELEASE</p>
-          <a class="inline-link" href="discography.html">
-            VIEW DISCOGRAPHY
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="footer-inner">
-    <p>© 2026 夜敷</p>
-    <a href="#top">BACK TO TOP</a>
-  </div>
-</footer>
-
-</body>
-</html>
+    mobileMenus.forEach((menu) => {
+      menu.removeAttribute("open");
+    });
+  });
+});

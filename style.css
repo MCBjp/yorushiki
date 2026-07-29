@@ -999,73 +999,75 @@ a {
   display: none;
 }
 
-.home-heading h1,
-.home-heading h2 {
-  margin: 0 0 18px;
-  font-size: clamp(1.9rem, 6vw, 2.8rem);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  line-height: 1.15;
-}
-
 .home-heading {
-  margin-bottom: 34px;
+  margin-bottom: 28px;
   border-bottom: 1px solid var(--line);
 }
 
+.home-heading h1,
+.home-heading h2 {
+  margin: 0 0 16px;
+  font-size: clamp(24px, 5vw, 32px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+}
+
 .home-latest .latest-item {
-  grid-template-columns: 170px minmax(0,1fr);
+  grid-template-columns: 150px minmax(0, 1fr);
   align-items: center;
 }
 
-.latest-content{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
+.latest-content {
+  min-width: 0;
 }
 
-.home-live-card{
-  max-width:100%;
+.home-live-card {
+  max-width: 100%;
 }
 
-.home-live-message{
-  margin:18px 0 0;
-  font-size:clamp(1.2rem,3vw,2rem);
-  line-height:1.6;
+.home-live-message {
+  margin: 16px 0 0;
+  font-size: clamp(18px, 3vw, 24px);
+  line-height: 1.7;
 }
 
-.release-copy .release-date{
-  margin-top:10px;
+.release-copy .release-date {
+  margin-top: 10px;
 }
 
-@media (max-width:780px){
-
-  .home-section{
-    padding-top:52px;
-    padding-bottom:60px;
+@media (max-width: 780px) {
+  .home-section {
+    padding-top: 46px;
+    padding-bottom: 54px;
   }
 
-  .home-heading{
-    margin-bottom:26px;
+  .home-heading {
+    margin-bottom: 24px;
   }
 
   .home-heading h1,
-  .home-heading h2{
-    font-size:2.2rem;
-    letter-spacing:0.02em;
+  .home-heading h2 {
+    font-size: 28px;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
   }
 
-  .home-latest .latest-item{
-    grid-template-columns:1fr;
-    gap:8px;
+  .home-latest .latest-item {
+    grid-template-columns: 1fr;
+    gap: 7px;
   }
 
-  .home-live-message{
-    font-size:1.8rem;
+  .home-live-message {
+    font-size: 20px;
+    line-height: 1.7;
   }
 
-  .release-preview{
-    gap:28px;
+  .feature-card.home-live-card {
+    padding: 28px 30px;
+  }
+
+  .release-preview {
+    gap: 28px;
   }
 }

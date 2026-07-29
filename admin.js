@@ -46,7 +46,15 @@ function normalizeCollection(type, value) {
 }
 
 async function fetchJsonCollection(type) {
-  const response = await fetch(JSON_FILES[type], { cache: "no-store" });
+  const separator = JSON_FILES[type].includes("?") ? "&" : "?";
+  const url = `${JSON_FILES[type]}${separator}_=${Date.now()}`;
+
+  const response = await fetch(url, {
+    cache: "no-store",
+    headers: {
+      "Cache-Control": "no-cache"
+    }
+  });
 
   if (!response.ok) {
     throw new Error(`${JSON_FILES[type]}: HTTP ${response.status}`);
@@ -86,6 +94,13 @@ async function showAdmin() {
   loginScreen.classList.add("hidden");
   adminScreen.classList.remove("hidden");
 
+  /*
+    ログインするたびに公開中のJSONを再取得する。
+    これにより、ログアウト前に画面上で追加・編集した未アップロード内容が
+    次のログイン後までメモリ上に残るのを防ぐ。
+  */
+  dataReadyPromise = loadData();
+
   try {
     await dataReadyPromise;
   } catch (error) {
@@ -103,7 +118,7 @@ function showLogin() {
   loginMessage.textContent = "";
 }
 
-dataReadyPromise = loadData();
+dataReadyPromise = Promise.resolve();
 
 if (sessionStorage.getItem(SESSION_KEY) === "ok") {
   showAdmin();
@@ -126,6 +141,18 @@ loginForm.addEventListener("submit", async function (event) {
 
 logoutButton.addEventListener("click", function () {
   sessionStorage.removeItem(SESSION_KEY);
+
+  /*
+    ログアウト時に編集中のメモリデータも破棄する。
+    次回ログイン時には showAdmin() が公開中のJSONを再取得する。
+  */
+  data = cloneDefaultData();
+  resetNewsForm();
+  resetLiveForm();
+  resetDiscographyForm();
+  renderAll();
+  updateJsonPreview("news");
+
   showLogin();
 });
 

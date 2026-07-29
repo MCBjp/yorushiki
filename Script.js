@@ -1,62 +1,72 @@
-const menuButton = document.querySelector(".menu-button");
-const globalNav = document.querySelector(".global-nav");
-const navLinks = document.querySelectorAll(".global-nav a");
-const currentYear = document.querySelector("#current-year");
+document.addEventListener("DOMContentLoaded", () => {
+  const menuButton = document.querySelector(".menu-button");
+  const globalNav = document.querySelector(".global-nav");
+  const navLinks = document.querySelectorAll(".global-nav a");
+  const currentYear = document.querySelector("#current-year");
 
-function closeMenu() {
-  menuButton?.setAttribute("aria-expanded", "false");
-  menuButton?.setAttribute("aria-label", "メニューを開く");
-  globalNav?.classList.remove("is-open");
-  document.body.classList.remove("menu-open");
-}
+  function closeMenu() {
+    if (!menuButton || !globalNav) return;
 
-menuButton?.addEventListener("click", () => {
-  const isOpen = menuButton.getAttribute("aria-expanded") === "true";
-
-  menuButton.setAttribute("aria-expanded", String(!isOpen));
-  menuButton.setAttribute(
-    "aria-label",
-    isOpen ? "メニューを開く" : "メニューを閉じる"
-  );
-
-  globalNav?.classList.toggle("is-open", !isOpen);
-  document.body.classList.toggle("menu-open", !isOpen);
-});
-
-navLinks.forEach((link) => {
-  link.addEventListener("click", closeMenu);
-});
-
-window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    closeMenu();
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "メニューを開く");
+    globalNav.classList.remove("is-open");
+    document.body.classList.remove("menu-open");
   }
-});
 
-if (currentYear) {
-  currentYear.textContent = new Date().getFullYear();
-}
+  if (menuButton && globalNav) {
+    menuButton.addEventListener("click", () => {
+      const isOpen =
+        menuButton.getAttribute("aria-expanded") === "true";
 
-/* LIVEページ：UPCOMING / PAST */
-const liveTabs = document.querySelectorAll("[data-live-tab]");
-const livePanels = document.querySelectorAll("[data-live-panel]");
+      menuButton.setAttribute(
+        "aria-expanded",
+        String(!isOpen)
+      );
 
-function activateLiveTab(tabName) {
+      menuButton.setAttribute(
+        "aria-label",
+        isOpen ? "メニューを開く" : "メニューを閉じる"
+      );
+
+      globalNav.classList.toggle("is-open", !isOpen);
+      document.body.classList.toggle("menu-open", !isOpen);
+    });
+  }
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMenu();
+    }
+  });
+
+  if (currentYear) {
+    currentYear.textContent = new Date().getFullYear();
+  }
+
+  const liveTabs = document.querySelectorAll("[data-live-tab]");
+  const livePanels = document.querySelectorAll("[data-live-panel]");
+
+  function activateLiveTab(tabName) {
+    liveTabs.forEach((tab) => {
+      const isActive = tab.dataset.liveTab === tabName;
+
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", String(isActive));
+    });
+
+    livePanels.forEach((panel) => {
+      const isActive = panel.dataset.livePanel === tabName;
+      panel.hidden = !isActive;
+    });
+  }
+
   liveTabs.forEach((tab) => {
-    const active = tab.dataset.liveTab === tabName;
-
-    tab.classList.toggle("is-active", active);
-    tab.setAttribute("aria-selected", String(active));
-  });
-
-  livePanels.forEach((panel) => {
-    const active = panel.dataset.livePanel === tabName;
-    panel.hidden = !active;
-  });
-}
-
-liveTabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    activateLiveTab(tab.dataset.liveTab);
+    tab.addEventListener("click", () => {
+      activateLiveTab(tab.dataset.liveTab);
+    });
   });
 });

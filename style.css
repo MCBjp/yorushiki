@@ -127,18 +127,18 @@ a {
   max-height: min(76vh, 820px);
   overflow: hidden;
   background: #07080a;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .home-gallery-track {
-  width: 100%;
+  width: 300%;
   height: 100%;
   display: flex;
   transform: translate3d(0, 0, 0);
   transition: transform 0.38s ease;
   will-change: transform;
-  touch-action: pan-y pinch-zoom;
-  user-select: none;
-  -webkit-user-select: none;
 }
 
 .home-gallery-track.is-dragging {
@@ -146,8 +146,8 @@ a {
 }
 
 .home-gallery-slide {
-  flex: 0 0 100%;
-  width: 100%;
+  flex: 0 0 calc(100% / 3);
+  width: calc(100% / 3);
   height: 100%;
   margin: 0;
 }

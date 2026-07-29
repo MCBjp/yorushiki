@@ -133,18 +133,16 @@ a {
   width: 100%;
   height: 100%;
   display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.38s ease;
+  will-change: transform;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.home-gallery-track::-webkit-scrollbar {
-  display: none;
+.home-gallery-track.is-dragging {
+  transition: none;
 }
 
 .home-gallery-slide {
@@ -152,8 +150,6 @@ a {
   width: 100%;
   height: 100%;
   margin: 0;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
 }
 
 .home-gallery-slide img {
@@ -164,6 +160,7 @@ a {
   object-position: center;
   pointer-events: none;
   user-select: none;
+  -webkit-user-select: none;
   -webkit-user-drag: none;
 }
 

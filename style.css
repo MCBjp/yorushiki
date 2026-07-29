@@ -626,8 +626,8 @@ a {
     z-index: 110;
     top: 46px;
     right: 0;
-    width: min(74vw, 270px);
-    padding: 8px 15px;
+    width: min(62vw, 220px);
+    padding: 4px 12px;
     display: flex;
     flex-direction: column;
     border: 1px solid var(--line);
@@ -637,7 +637,7 @@ a {
   }
 
   .mobile-nav a {
-    padding: 11px 3px;
+    padding: 10px 2px;
     border-bottom: 1px solid var(--line);
     color: #fff;
     text-align: right;

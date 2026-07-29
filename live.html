@@ -8,7 +8,7 @@
   <title>LIVE | 夜敷 Official Website</title>
   <meta name="description" content="夜敷のライブスケジュールと過去の出演情報。">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 
 <body id="top">
@@ -16,40 +16,43 @@
 <header class="site-header">
   <a class="site-logo" href="index.html" aria-label="夜敷 トップページ">夜敷</a>
 
-  <input
-    class="menu-toggle"
-    type="checkbox"
-    id="menu-toggle"
-    aria-label="メニューを開閉"
-  >
-
-  <label class="menu-button" for="menu-toggle">
-    <span></span>
-    <span></span>
-  </label>
-
-  <nav class="global-nav" aria-label="メインメニュー">
+  <nav class="desktop-nav" aria-label="メインメニュー">
     <a href="index.html">HOME</a>
     <a href="live.html" aria-current="page">LIVE</a>
     <a href="discography.html">DISCOGRAPHY</a>
     <a href="profile.html">PROFILE</a>
     <a href="contact.html">CONTACT</a>
   </nav>
+
+  <details class="mobile-menu">
+    <summary aria-label="メニューを開く">
+      <span></span>
+      <span></span>
+    </summary>
+
+    <nav class="mobile-nav" aria-label="スマートフォン用メニュー">
+      <a href="index.html">HOME</a>
+      <a href="live.html" aria-current="page">LIVE</a>
+      <a href="discography.html">DISCOGRAPHY</a>
+      <a href="profile.html">PROFILE</a>
+      <a href="contact.html">CONTACT</a>
+    </nav>
+  </details>
 </header>
 
 <main class="subpage">
 
   <section class="page-header">
-    <div>
+    <div class="page-header-inner">
       <p class="eyebrow">YORUSHIKI</p>
       <h1>LIVE</h1>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section live-section">
 
     <input
-      class="live-tab-radio"
+      class="live-tab-control"
       type="radio"
       name="live-tab"
       id="live-upcoming"
@@ -57,13 +60,13 @@
     >
 
     <input
-      class="live-tab-radio"
+      class="live-tab-control"
       type="radio"
       name="live-tab"
       id="live-past"
     >
 
-    <div class="live-tabs" aria-label="ライブ情報">
+    <div class="live-tabs">
       <label for="live-upcoming">UPCOMING</label>
       <label for="live-past">PAST</label>
     </div>
@@ -71,74 +74,66 @@
     <div class="live-panels">
 
       <section class="live-panel live-panel-upcoming">
-        <div class="live-card-list">
+        <article class="live-card">
+          <div class="live-card-top">
+            <time datetime="2026-09-18">
+              <span class="live-date-year">2026</span>
+              <span class="live-date-main">09.18</span>
+            </time>
 
-          <article class="live-card">
-            <div class="live-card-top">
-              <time datetime="2026-09-18">
-                <span class="live-date-year">2026</span>
-                <span class="live-date-main">09.18</span>
-              </time>
+            <span class="live-badge">UPCOMING</span>
+          </div>
 
-              <span class="live-badge">UPCOMING</span>
+          <h2>下北沢ERA</h2>
+
+          <dl class="live-details">
+            <div>
+              <dt>OPEN / START</dt>
+              <dd>18:30 / 19:00</dd>
             </div>
 
-            <h2>下北沢ERA</h2>
+            <div>
+              <dt>ACT</dt>
+              <dd>夜敷 / 出演者名 / 出演者名</dd>
+            </div>
 
-            <dl class="live-details">
-              <div>
-                <dt>OPEN / START</dt>
-                <dd>18:30 / 19:00</dd>
-              </div>
+            <div>
+              <dt>TICKET</dt>
+              <dd>ADV ¥2,500 / DOOR ¥3,000</dd>
+            </div>
+          </dl>
 
-              <div>
-                <dt>ACT</dt>
-                <dd>夜敷 / 出演者名 / 出演者名</dd>
-              </div>
-
-              <div>
-                <dt>TICKET</dt>
-                <dd>ADV ¥2,500 / DOOR ¥3,000</dd>
-              </div>
-            </dl>
-
-            <a class="live-contact-link" href="contact.html">
-              TICKET / CONTACT
-            </a>
-          </article>
-
-        </div>
+          <a class="live-contact-link" href="contact.html">
+            TICKET / CONTACT
+          </a>
+        </article>
       </section>
 
       <section class="live-panel live-panel-past">
-        <div class="live-card-list">
+        <article class="live-card">
+          <div class="live-card-top">
+            <time datetime="2025-05-10">
+              <span class="live-date-year">2025</span>
+              <span class="live-date-main">05.10</span>
+            </time>
 
-          <article class="live-card">
-            <div class="live-card-top">
-              <time datetime="2025-05-10">
-                <span class="live-date-year">2025</span>
-                <span class="live-date-main">05.10</span>
-              </time>
+            <span class="live-badge live-badge-past">PAST</span>
+          </div>
 
-              <span class="live-badge live-badge-past">PAST</span>
+          <h2>吉祥寺 BLACK &amp; BLUE</h2>
+
+          <dl class="live-details">
+            <div>
+              <dt>EVENT</dt>
+              <dd>イベント名をここに記載</dd>
             </div>
 
-            <h2>吉祥寺 BLACK &amp; BLUE</h2>
-
-            <dl class="live-details">
-              <div>
-                <dt>EVENT</dt>
-                <dd>イベント名をここに記載</dd>
-              </div>
-
-              <div>
-                <dt>ACT</dt>
-                <dd>夜敷 / 出演者名 / 出演者名</dd>
-              </div>
-            </dl>
-          </article>
-
-        </div>
+            <div>
+              <dt>ACT</dt>
+              <dd>夜敷 / 出演者名 / 出演者名</dd>
+            </div>
+          </dl>
+        </article>
       </section>
 
     </div>

@@ -1,173 +1,647 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow,noarchive">
+"use strict";
 
-  <title>夜敷 | Official Website</title>
-  <meta
-    name="description"
-    content="夜敷の公式ウェブサイト。ライブ情報、作品情報、プロフィールを掲載しています。"
-  >
+const NEWS_JSON_FILE = "news.json";
+const LIVE_JSON_FILE = "live.json";
 
-  <link rel="stylesheet" href="style.css?v=15">
-  <script src="common.js" defer></script>
-  <script src="index.js?v=6" defer></script>
-</head>
+document.addEventListener("DOMContentLoaded", function () {
+  initializeHomeGallery();
 
-<body id="top">
+  loadNews().catch(function (error) {
+    console.error(error);
+    renderNewsError();
+  });
 
-<header id="site-header" class="site-header"></header>
+  loadNextLive().catch(function (error) {
+    console.error(error);
+    renderLiveError();
+  });
+});
 
-<main class="home-main">
+function initializeHomeGallery() {
+  const track = document.getElementById("home-gallery-track");
 
-  <section
-    class="home-gallery"
-    aria-label="夜敷 アーティスト写真"
-  >
-    <div class="home-gallery-viewport">
+  if (!track) {
+    return;
+  }
 
-      <div
-        id="home-gallery-track"
-        class="home-gallery-track"
-      >
-        <figure class="home-gallery-slide">
-          <img
-            src="images/Artistphoto1.jpeg"
-            alt="夜敷 アーティスト写真 1"
-            loading="eager"
-            decoding="async"
-          >
-        </figure>
+  const viewport = track.closest(".home-gallery-viewport");
 
-        <figure class="home-gallery-slide">
-          <img
-            src="images/Artistphoto2.jpeg"
-            alt="夜敷 アーティスト写真 2"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
+  if (!viewport) {
+    return;
+  }
 
-        <figure class="home-gallery-slide">
-          <img
-            src="images/Artistphoto3.jpeg"
-            alt="夜敷 アーティスト写真 3"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-      </div>
+  const slides = Array.from(
+    track.querySelectorAll(".home-gallery-slide")
+  );
 
-      <button
-        type="button"
-        class="home-gallery-button home-gallery-button-prev"
-        aria-label="前の写真を見る"
-      >
-        <span aria-hidden="true">‹</span>
-      </button>
+  const previousButton = viewport.querySelector(
+    ".home-gallery-button-prev"
+  );
 
-      <button
-        type="button"
-        class="home-gallery-button home-gallery-button-next"
-        aria-label="次の写真を見る"
-      >
-        <span aria-hidden="true">›</span>
-      </button>
+  const nextButton = viewport.querySelector(
+    ".home-gallery-button-next"
+  );
 
-      <div
-        class="home-gallery-dots"
-        aria-label="写真の切り替え"
-      >
-        <button
-          type="button"
-          class="home-gallery-dot is-active"
-          aria-label="1枚目の写真を表示"
-          aria-current="true"
-          data-slide-index="0"
-        ></button>
+  const dots = Array.from(
+    viewport.querySelectorAll(".home-gallery-dot")
+  );
 
-        <button
-          type="button"
-          class="home-gallery-dot"
-          aria-label="2枚目の写真を表示"
-          data-slide-index="1"
-        ></button>
+  if (slides.length === 0) {
+    return;
+  }
 
-        <button
-          type="button"
-          class="home-gallery-dot"
-          aria-label="3枚目の写真を表示"
-          data-slide-index="2"
-        ></button>
-      </div>
+  let currentIndex = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchCurrentX = 0;
+  let touchCurrentY = 0;
+  let isTouching = false;
+  let directionLocked = false;
+  let isHorizontalGesture = false;
 
+  function getSlideWidth() {
+    return viewport.getBoundingClientRect().width;
+  }
+
+  function normalizeIndex(index) {
+    return Math.max(
+      0,
+      Math.min(index, slides.length - 1)
+    );
+  }
+
+  function updateIndicators() {
+    slides.forEach(function (slide, slideIndex) {
+      slide.setAttribute(
+        "aria-hidden",
+        slideIndex === currentIndex ? "false" : "true"
+      );
+    });
+
+    dots.forEach(function (dot, dotIndex) {
+      const isActive = dotIndex === currentIndex;
+
+      dot.classList.toggle("is-active", isActive);
+
+      if (isActive) {
+        dot.setAttribute("aria-current", "true");
+      } else {
+        dot.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  function setTrackPosition(index, animate) {
+    const slideWidth = getSlideWidth();
+
+    if (slideWidth <= 0) {
+      return;
+    }
+
+    track.classList.toggle("is-dragging", !animate);
+    track.style.transform =
+      `translate3d(-${slideWidth * index}px, 0, 0)`;
+
+    if (!animate) {
+      requestAnimationFrame(function () {
+        track.classList.remove("is-dragging");
+      });
+    }
+  }
+
+  function moveToSlide(index, animate) {
+    currentIndex = normalizeIndex(index);
+    setTrackPosition(currentIndex, animate !== false);
+    updateIndicators();
+  }
+
+  function showPreviousSlide() {
+    moveToSlide(currentIndex - 1, true);
+  }
+
+  function showNextSlide() {
+    moveToSlide(currentIndex + 1, true);
+  }
+
+  function resetTouchState() {
+    isTouching = false;
+    directionLocked = false;
+    isHorizontalGesture = false;
+    touchStartX = 0;
+    touchStartY = 0;
+    touchCurrentX = 0;
+    touchCurrentY = 0;
+    track.classList.remove("is-dragging");
+  }
+
+  function finishTouch() {
+    if (!isTouching) {
+      return;
+    }
+
+    const distanceX = touchCurrentX - touchStartX;
+    const slideWidth = getSlideWidth();
+    const threshold = Math.min(
+      80,
+      Math.max(36, slideWidth * 0.1)
+    );
+
+    if (
+      isHorizontalGesture &&
+      Math.abs(distanceX) >= threshold
+    ) {
+      if (distanceX < 0) {
+        showNextSlide();
+      } else {
+        showPreviousSlide();
+      }
+    } else {
+      setTrackPosition(currentIndex, true);
+    }
+
+    resetTouchState();
+  }
+
+  if (previousButton) {
+    previousButton.addEventListener(
+      "click",
+      showPreviousSlide
+    );
+  }
+
+  if (nextButton) {
+    nextButton.addEventListener(
+      "click",
+      showNextSlide
+    );
+  }
+
+  dots.forEach(function (dot) {
+    dot.addEventListener("click", function () {
+      const index = Number(dot.dataset.slideIndex);
+
+      if (Number.isInteger(index)) {
+        moveToSlide(index, true);
+      }
+    });
+  });
+
+  viewport.addEventListener(
+    "touchstart",
+    function (event) {
+      if (event.touches.length !== 1) {
+        return;
+      }
+
+      const touch = event.touches[0];
+
+      isTouching = true;
+      directionLocked = false;
+      isHorizontalGesture = false;
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      touchCurrentX = touch.clientX;
+      touchCurrentY = touch.clientY;
+
+      track.classList.add("is-dragging");
+    },
+    { passive: true }
+  );
+
+  viewport.addEventListener(
+    "touchmove",
+    function (event) {
+      if (!isTouching || event.touches.length !== 1) {
+        return;
+      }
+
+      const touch = event.touches[0];
+
+      touchCurrentX = touch.clientX;
+      touchCurrentY = touch.clientY;
+
+      const distanceX = touchCurrentX - touchStartX;
+      const distanceY = touchCurrentY - touchStartY;
+
+      if (
+        !directionLocked &&
+        (
+          Math.abs(distanceX) >= 6 ||
+          Math.abs(distanceY) >= 6
+        )
+      ) {
+        directionLocked = true;
+        isHorizontalGesture =
+          Math.abs(distanceX) > Math.abs(distanceY);
+      }
+
+      if (!directionLocked || !isHorizontalGesture) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const slideWidth = getSlideWidth();
+
+      if (slideWidth <= 0) {
+        return;
+      }
+
+      let adjustedDistanceX = distanceX;
+
+      if (
+        (currentIndex === 0 && distanceX > 0) ||
+        (
+          currentIndex === slides.length - 1 &&
+          distanceX < 0
+        )
+      ) {
+        adjustedDistanceX *= 0.28;
+      }
+
+      const position =
+        -(slideWidth * currentIndex) +
+        adjustedDistanceX;
+
+      track.style.transform =
+        `translate3d(${position}px, 0, 0)`;
+    },
+    { passive: false }
+  );
+
+  viewport.addEventListener(
+    "touchend",
+    finishTouch,
+    { passive: true }
+  );
+
+  viewport.addEventListener(
+    "touchcancel",
+    function () {
+      if (!isTouching) {
+        return;
+      }
+
+      setTrackPosition(currentIndex, true);
+      resetTouchState();
+    },
+    { passive: true }
+  );
+
+  viewport.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      showPreviousSlide();
+    }
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      showNextSlide();
+    }
+  });
+
+  window.addEventListener("resize", function () {
+    setTrackPosition(currentIndex, false);
+  });
+
+  viewport.setAttribute("tabindex", "0");
+  viewport.setAttribute("role", "region");
+  viewport.setAttribute(
+    "aria-label",
+    "アーティスト写真スライダー"
+  );
+
+  requestAnimationFrame(function () {
+    moveToSlide(0, false);
+  });
+}
+
+async function fetchJson(file) {
+  const separator = file.includes("?") ? "&" : "?";
+  const url = `${file}${separator}_=${Date.now()}`;
+
+  const response = await fetch(url, {
+    cache: "no-store",
+    headers: {
+      "Cache-Control": "no-cache"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `${file} の読み込みに失敗しました: ${response.status}`
+    );
+  }
+
+  return await response.json();
+}
+
+async function loadNews() {
+  const value = await fetchJson(NEWS_JSON_FILE);
+  const newsItems = normalizeNews(value);
+  renderNews(newsItems);
+}
+
+async function loadNextLive() {
+  const value = await fetchJson(LIVE_JSON_FILE);
+
+  const items = Array.isArray(value)
+    ? value
+    : (
+      value && Array.isArray(value.live)
+        ? value.live
+        : []
+    );
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  const visibleItems = items
+    .filter(function (item) {
+      return (
+        item &&
+        item.visible !== false &&
+        String(item.date || "") >= today
+      );
+    })
+    .sort(function (a, b) {
+      return String(a.date || "").localeCompare(
+        String(b.date || "")
+      );
+    });
+
+  const box = document.getElementById(
+    "home-live-content"
+  );
+
+  if (!box) {
+    return;
+  }
+
+  if (visibleItems.length === 0) {
+    box.innerHTML = `
+      <p class="small-label">COMING SOON</p>
+      <p class="home-live-message">
+        現在、出演予定のライブはありません。
+      </p>
+    `;
+    return;
+  }
+
+  const next = visibleItems[0];
+  const artists = formatArtists(next.artists);
+
+  ensureHomeLiveStyles();
+
+  box.innerHTML = `
+    <div class="home-live-meta">
+      <p class="home-live-date">
+        ${escapeHtml(formatDate(next.date || ""))}
+      </p>
+
+      <p class="home-live-venue">
+        ${escapeHtml(next.venue || "")}
+      </p>
     </div>
-  </section>
 
-  <section class="section home-section home-latest">
-    <div class="container">
+    <h3 class="home-live-title">
+      ${escapeHtml(next.title || "")}
+    </h3>
 
-      <div class="section-heading home-heading">
-        <h1>最新情報</h1>
-      </div>
+    ${
+      artists
+        ? `
+          <p class="home-live-artists">
+            ${escapeHtml(artists)}
+          </p>
+        `
+        : ""
+    }
+  `;
+}
 
-      <div id="latest-list" class="latest-list">
-        <div class="empty">最新情報を読み込んでいます。</div>
-      </div>
+function ensureHomeLiveStyles() {
+  if (
+    document.getElementById(
+      "home-live-card-styles"
+    )
+  ) {
+    return;
+  }
 
-    </div>
-  </section>
+  const style = document.createElement("style");
 
-  <section class="section section-alt home-section home-live">
-    <div class="container">
+  style.id = "home-live-card-styles";
 
-      <div class="section-heading home-heading">
-        <h2>次回ライブ</h2>
-      </div>
+  style.textContent = `
+    #home-live-content.home-live-card {
+      padding: 28px 20px 30px;
+    }
 
-      <div class="feature-card home-live-card" id="home-live-content">
-        <p class="small-label">COMING SOON</p>
-        <p class="home-live-message">
-          現在、出演予定のライブはありません。
-        </p>
-      </div>
+    #home-live-content .home-live-meta {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 0 0 22px;
+    }
 
-    </div>
-  </section>
+    #home-live-content .home-live-date,
+    #home-live-content .home-live-venue {
+      margin: 0;
+      font-size: clamp(1rem, 4.2vw, 1.1rem);
+      font-weight: 600;
+      line-height: 1.5;
+      letter-spacing: 0.01em;
+    }
 
-  <section class="section home-section home-release">
-    <div class="container">
+    #home-live-content .home-live-date {
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
 
-      <div class="section-heading home-heading">
-        <h2>最新作品</h2>
-      </div>
+    #home-live-content .home-live-venue {
+      min-width: 0;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
 
-      <div class="release-preview">
+    #home-live-content .home-live-title {
+      margin: 0 0 22px;
+      font-family: inherit;
+      font-size: clamp(1rem, 4.2vw, 1.1rem);
+      font-weight: 400;
+      line-height: 1.75;
+      letter-spacing: 0.01em;
+      overflow-wrap: anywhere;
+    }
 
-        <div class="artwork-placeholder">
-          ARTWORK
-        </div>
+    #home-live-content .home-live-artists {
+      margin: 0;
+      font-size: clamp(1rem, 4.2vw, 1.1rem);
+      font-weight: 400;
+      line-height: 1.75;
+      letter-spacing: 0.01em;
+      overflow-wrap: anywhere;
+    }
 
-        <div class="release-copy">
-          <p class="small-label">DIGITAL RELEASE</p>
-          <h3 class="release-title">夜敷</h3>
-          <p class="release-date">2026.01.27 RELEASE</p>
+    @media (max-width: 420px) {
+      #home-live-content.home-live-card {
+        padding: 24px 18px 26px;
+      }
 
-          <a class="pill-link" href="discography.html">
-            作品情報を見る
-          </a>
-        </div>
+      #home-live-content .home-live-meta {
+        gap: 14px;
+        margin-bottom: 20px;
+      }
 
-      </div>
+      #home-live-content .home-live-title {
+        margin-bottom: 20px;
+      }
+    }
+  `;
 
-    </div>
-  </section>
+  document.head.appendChild(style);
+}
 
-</main>
+function formatArtists(value) {
+  if (Array.isArray(value)) {
+    return value
+      .map(function (artist) {
+        return String(artist || "").trim();
+      })
+      .filter(Boolean)
+      .join(" / ");
+  }
 
-<footer id="site-footer" class="site-footer"></footer>
+  return String(value || "").trim();
+}
 
-</body>
-</html>
+function renderLiveError() {
+  const box = document.getElementById(
+    "home-live-content"
+  );
+
+  if (!box) {
+    return;
+  }
+
+  box.innerHTML = `
+    <p class="small-label">COMING SOON</p>
+    <p class="home-live-message">
+      ライブ情報を読み込めませんでした。
+    </p>
+  `;
+}
+
+function normalizeNews(value) {
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  if (
+    value &&
+    typeof value === "object" &&
+    Array.isArray(value.news)
+  ) {
+    return value.news;
+  }
+
+  return [];
+}
+
+function renderNews(newsItems) {
+  const list = document.getElementById(
+    "latest-list"
+  );
+
+  if (!list) {
+    return;
+  }
+
+  const visibleItems = newsItems
+    .filter(function (item) {
+      return item && item.visible !== false;
+    })
+    .sort(function (a, b) {
+      return String(b.date || "").localeCompare(
+        String(a.date || "")
+      );
+    });
+
+  if (visibleItems.length === 0) {
+    list.innerHTML =
+      '<div class="empty">' +
+      "現在、掲載中の最新情報はありません。" +
+      "</div>";
+
+    return;
+  }
+
+  list.innerHTML = visibleItems
+    .map(function (item) {
+      const date = String(item.date || "");
+      const text = String(item.text || "");
+      const link = String(
+        item.link || ""
+      ).trim();
+
+      const content = link
+        ? `
+          <p>
+            <a href="${escapeHtml(link)}">
+              ${escapeHtml(text)}
+            </a>
+          </p>
+        `
+        : `<p>${escapeHtml(text)}</p>`;
+
+      return `
+        <article class="latest-item">
+          <time datetime="${escapeHtml(date)}">
+            ${escapeHtml(formatDate(date))}
+          </time>
+
+          <div class="latest-content">
+            ${content}
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function renderNewsError() {
+  const list = document.getElementById(
+    "latest-list"
+  );
+
+  if (!list) {
+    return;
+  }
+
+  list.innerHTML =
+    '<div class="empty">' +
+    "最新情報を読み込めませんでした。" +
+    "</div>";
+}
+
+function formatDate(value) {
+  const match = String(value).match(
+    /^(\d{4})-(\d{2})-(\d{2})$/
+  );
+
+  if (!match) {
+    return value;
+  }
+
+  return `${match[1]}.${match[2]}.${match[3]}`;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}

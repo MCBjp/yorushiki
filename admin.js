@@ -7,7 +7,6 @@
 */
 const ADMIN_PASSWORD = "yorushiki-admin";
 
-const STORAGE_KEY = "yorushiki-admin-data-v1";
 const SESSION_KEY = "yorushiki-admin-login";
 const JSON_FILES = {
   news: "news.json",
@@ -57,28 +56,7 @@ async function fetchJsonCollection(type) {
   return normalizeCollection(type, value);
 }
 
-function loadLocalDraft() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-
-    if (!saved) {
-      return null;
-    }
-
-    const parsed = JSON.parse(saved);
-    return {
-      news: normalizeCollection("news", parsed.news),
-      live: normalizeCollection("live", parsed.live),
-      discography: normalizeCollection("discography", parsed.discography)
-    };
-  } catch (error) {
-    console.error("端末内データの読み込みに失敗しました。", error);
-    return null;
-  }
-}
-
 async function loadData() {
-  const localDraft = loadLocalDraft();
   const remoteData = cloneDefaultData();
 
   const results = await Promise.allSettled(
@@ -93,21 +71,13 @@ async function loadData() {
     }
   });
 
-  data = localDraft || remoteData;
+  data = remoteData;
   sortData();
   renderAll();
   updateJsonPreview(currentExportType);
-
-  return {
-    source: localDraft ? "local" : "remote",
-    remoteLoaded: results.some(function (result) {
-      return result.status === "fulfilled";
-    })
-  };
 }
 
 function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   renderAll();
   updateJsonPreview(currentExportType);
 }
@@ -594,14 +564,13 @@ document
 
 document.getElementById("reset-all").addEventListener("click", async function () {
   const confirmed = window.confirm(
-    "この端末に保存されている管理データを削除し、公開中のJSONを読み直しますか？"
+    "編集中の内容を破棄し、公開中のJSONを読み直しますか？"
   );
 
   if (!confirmed) {
     return;
   }
 
-  localStorage.removeItem(STORAGE_KEY);
   data = cloneDefaultData();
   resetNewsForm();
   resetLiveForm();
@@ -612,7 +581,7 @@ document.getElementById("reset-all").addEventListener("click", async function ()
   updateJsonPreview("news");
 
   document.getElementById("export-message").textContent =
-    "端末内データを削除し、公開中のJSONを読み直しました。";
+    "公開中のJSONを読み直しました。";
 });
 
 function escapeHtml(value) {

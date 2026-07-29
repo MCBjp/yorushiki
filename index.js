@@ -64,15 +64,10 @@ function initializeHomeGallery() {
   }
 
   function normalizeIndex(index) {
-    if (index < 0) {
-      return slides.length - 1;
-    }
-
-    if (index >= slides.length) {
-      return 0;
-    }
-
-    return index;
+    return Math.max(
+      0,
+      Math.min(index, slides.length - 1)
+    );
   }
 
   function updateIndicators() {
@@ -252,8 +247,21 @@ function initializeHomeGallery() {
         return;
       }
 
+      let adjustedDistanceX = distanceX;
+
+      if (
+        (currentIndex === 0 && distanceX > 0) ||
+        (
+          currentIndex === slides.length - 1 &&
+          distanceX < 0
+        )
+      ) {
+        adjustedDistanceX *= 0.28;
+      }
+
       const position =
-        -(slideWidth * currentIndex) + distanceX;
+        -(slideWidth * currentIndex) +
+        adjustedDistanceX;
 
       track.style.transform =
         `translate3d(${position}px, 0, 0)`;

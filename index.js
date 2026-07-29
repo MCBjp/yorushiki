@@ -24,20 +24,26 @@ function initializeHomeGallery() {
     return;
   }
 
+  const viewport = track.closest(".home-gallery-viewport");
+
+  if (!viewport) {
+    return;
+  }
+
   const slides = Array.from(
     track.querySelectorAll(".home-gallery-slide")
   );
 
-  const previousButton = document.querySelector(
+  const previousButton = viewport.querySelector(
     ".home-gallery-button-prev"
   );
 
-  const nextButton = document.querySelector(
+  const nextButton = viewport.querySelector(
     ".home-gallery-button-next"
   );
 
   const dots = Array.from(
-    document.querySelectorAll(".home-gallery-dot")
+    viewport.querySelectorAll(".home-gallery-dot")
   );
 
   if (slides.length === 0) {
@@ -52,6 +58,10 @@ function initializeHomeGallery() {
   let isTouching = false;
   let directionLocked = false;
   let isHorizontalGesture = false;
+
+  function getSlideWidth() {
+    return viewport.getBoundingClientRect().width;
+  }
 
   function normalizeIndex(index) {
     if (index < 0) {
@@ -87,7 +97,7 @@ function initializeHomeGallery() {
   }
 
   function setTrackPosition(index, animate) {
-    const slideWidth = track.getBoundingClientRect().width;
+    const slideWidth = getSlideWidth();
 
     if (slideWidth <= 0) {
       return;
@@ -135,10 +145,10 @@ function initializeHomeGallery() {
     }
 
     const distanceX = touchCurrentX - touchStartX;
-    const slideWidth = track.getBoundingClientRect().width;
+    const slideWidth = getSlideWidth();
     const threshold = Math.min(
       80,
-      Math.max(42, slideWidth * 0.12)
+      Math.max(36, slideWidth * 0.1)
     );
 
     if (
@@ -181,7 +191,7 @@ function initializeHomeGallery() {
     });
   });
 
-  track.addEventListener(
+  viewport.addEventListener(
     "touchstart",
     function (event) {
       if (event.touches.length !== 1) {
@@ -203,7 +213,7 @@ function initializeHomeGallery() {
     { passive: true }
   );
 
-  track.addEventListener(
+  viewport.addEventListener(
     "touchmove",
     function (event) {
       if (!isTouching || event.touches.length !== 1) {
@@ -221,8 +231,8 @@ function initializeHomeGallery() {
       if (
         !directionLocked &&
         (
-          Math.abs(distanceX) >= 7 ||
-          Math.abs(distanceY) >= 7
+          Math.abs(distanceX) >= 6 ||
+          Math.abs(distanceY) >= 6
         )
       ) {
         directionLocked = true;
@@ -236,26 +246,14 @@ function initializeHomeGallery() {
 
       event.preventDefault();
 
-      const slideWidth = track.getBoundingClientRect().width;
+      const slideWidth = getSlideWidth();
 
       if (slideWidth <= 0) {
         return;
       }
 
-      let adjustedDistanceX = distanceX;
-
-      if (
-        (currentIndex === 0 && distanceX > 0) ||
-        (
-          currentIndex === slides.length - 1 &&
-          distanceX < 0
-        )
-      ) {
-        adjustedDistanceX *= 0.32;
-      }
-
       const position =
-        -(slideWidth * currentIndex) + adjustedDistanceX;
+        -(slideWidth * currentIndex) + distanceX;
 
       track.style.transform =
         `translate3d(${position}px, 0, 0)`;
@@ -263,13 +261,13 @@ function initializeHomeGallery() {
     { passive: false }
   );
 
-  track.addEventListener(
+  viewport.addEventListener(
     "touchend",
     finishTouch,
     { passive: true }
   );
 
-  track.addEventListener(
+  viewport.addEventListener(
     "touchcancel",
     function () {
       if (!isTouching) {
@@ -282,7 +280,7 @@ function initializeHomeGallery() {
     { passive: true }
   );
 
-  track.addEventListener("keydown", function (event) {
+  viewport.addEventListener("keydown", function (event) {
     if (event.key === "ArrowLeft") {
       event.preventDefault();
       showPreviousSlide();
@@ -298,9 +296,9 @@ function initializeHomeGallery() {
     setTrackPosition(currentIndex, false);
   });
 
-  track.setAttribute("tabindex", "0");
-  track.setAttribute("role", "region");
-  track.setAttribute(
+  viewport.setAttribute("tabindex", "0");
+  viewport.setAttribute("role", "region");
+  viewport.setAttribute(
     "aria-label",
     "アーティスト写真スライダー"
   );

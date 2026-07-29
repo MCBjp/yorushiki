@@ -1,162 +1,68 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow,noarchive">
+const menuButton = document.querySelector(".menu-button");
+const globalNav = document.querySelector(".global-nav");
+const navLinks = document.querySelectorAll(".global-nav a");
+const currentYear = document.querySelector("#current-year");
 
-  <title>LIVE | 夜敷 Official Website</title>
-  <meta name="description" content="夜敷のライブスケジュールと過去の出演情報。">
+function closeMenu() {
+  if (!menuButton || !globalNav) return;
 
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="live.css">
-  <script src="script.js" defer></script>
-</head>
+  menuButton.setAttribute("aria-expanded", "false");
+  menuButton.setAttribute("aria-label", "メニューを開く");
+  globalNav.classList.remove("is-open");
+  document.body.classList.remove("menu-open");
+}
 
-<body id="top">
+if (menuButton && globalNav) {
+  menuButton.addEventListener("click", () => {
+    const isOpen = menuButton.getAttribute("aria-expanded") === "true";
 
-<header class="site-header">
-  <a class="site-logo" href="index.html" aria-label="夜敷 トップページ">夜敷</a>
+    menuButton.setAttribute("aria-expanded", String(!isOpen));
+    menuButton.setAttribute(
+      "aria-label",
+      isOpen ? "メニューを開く" : "メニューを閉じる"
+    );
 
-  <button
-    class="menu-button"
-    type="button"
-    aria-expanded="false"
-    aria-controls="global-nav"
-    aria-label="メニューを開く"
-  >
-    <span></span>
-    <span></span>
-  </button>
+    globalNav.classList.toggle("is-open", !isOpen);
+    document.body.classList.toggle("menu-open", !isOpen);
+  });
+}
 
-  <nav id="global-nav" class="global-nav" aria-label="メインメニュー">
-    <a href="index.html">HOME</a>
-    <a href="live.html" aria-current="page">LIVE</a>
-    <a href="discography.html">DISCOGRAPHY</a>
-    <a href="profile.html">PROFILE</a>
-    <a href="contact.html">CONTACT</a>
-  </nav>
-</header>
+navLinks.forEach((link) => {
+  link.addEventListener("click", closeMenu);
+});
 
-<main class="live-page">
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeMenu();
+  }
+});
 
-  <section class="live-page-header">
-    <p>YORUSHIKI</p>
-    <h1>LIVE</h1>
-  </section>
+if (currentYear) {
+  currentYear.textContent = new Date().getFullYear();
+}
 
-  <section class="live-content">
+/* LIVEページのタブ */
+const tabButtons = document.querySelectorAll("[data-tab-target]");
+const tabPanels = document.querySelectorAll("[data-tab-panel]");
 
-    <div class="live-tabs" role="tablist" aria-label="ライブ情報の切り替え">
-      <button
-        id="tab-upcoming"
-        class="live-tab is-active"
-        type="button"
-        role="tab"
-        aria-selected="true"
-        aria-controls="panel-upcoming"
-        data-tab-target="upcoming"
-      >
-        UPCOMING
-      </button>
+function switchLiveTab(targetName) {
+  tabButtons.forEach((button) => {
+    const active = button.dataset.tabTarget === targetName;
 
-      <button
-        id="tab-past"
-        class="live-tab"
-        type="button"
-        role="tab"
-        aria-selected="false"
-        aria-controls="panel-past"
-        data-tab-target="past"
-      >
-        PAST
-      </button>
-    </div>
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-selected", String(active));
+  });
 
-    <section
-      id="panel-upcoming"
-      class="live-panel is-active"
-      role="tabpanel"
-      aria-labelledby="tab-upcoming"
-      data-tab-panel="upcoming"
-    >
-      <article class="live-card">
-        <div class="live-card-top">
-          <time datetime="2026-09-18">
-            <span class="live-date-year">2026</span>
-            <span class="live-date-main">09.18</span>
-          </time>
+  tabPanels.forEach((panel) => {
+    const active = panel.dataset.tabPanel === targetName;
 
-          <span class="live-badge">UPCOMING</span>
-        </div>
+    panel.classList.toggle("is-active", active);
+    panel.hidden = !active;
+  });
+}
 
-        <h2>下北沢ERA</h2>
-
-        <dl class="live-details">
-          <div>
-            <dt>OPEN / START</dt>
-            <dd>18:30 / 19:00</dd>
-          </div>
-
-          <div>
-            <dt>ACT</dt>
-            <dd>夜敷 / 出演者名 / 出演者名</dd>
-          </div>
-
-          <div>
-            <dt>TICKET</dt>
-            <dd>ADV ¥2,500 / DOOR ¥3,000</dd>
-          </div>
-        </dl>
-
-        <a class="live-contact-link" href="contact.html">
-          TICKET / CONTACT
-        </a>
-      </article>
-    </section>
-
-    <section
-      id="panel-past"
-      class="live-panel"
-      role="tabpanel"
-      aria-labelledby="tab-past"
-      data-tab-panel="past"
-      hidden
-    >
-      <article class="live-card">
-        <div class="live-card-top">
-          <time datetime="2025-05-10">
-            <span class="live-date-year">2025</span>
-            <span class="live-date-main">05.10</span>
-          </time>
-
-          <span class="live-badge live-badge-past">PAST</span>
-        </div>
-
-        <h2>吉祥寺 BLACK &amp; BLUE</h2>
-
-        <dl class="live-details">
-          <div>
-            <dt>EVENT</dt>
-            <dd>イベント名をここに記載</dd>
-          </div>
-
-          <div>
-            <dt>ACT</dt>
-            <dd>夜敷 / 出演者名 / 出演者名</dd>
-          </div>
-        </dl>
-      </article>
-    </section>
-
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <p>© <span id="current-year"></span> 夜敷</p>
-  <a href="#top">BACK TO TOP</a>
-</footer>
-
-</body>
-</html>
+tabButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    switchLiveTab(button.dataset.tabTarget);
+  });
+});

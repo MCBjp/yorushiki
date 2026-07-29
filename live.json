@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "date": "2026-09-18",
+    "title": "おりばー「GARAGE ROCK TRANS BEAT」digital release TOUR 東高円寺編",
+    "venue": "東高円寺U.F.O CLUB",
+    "open": "18:30",
+    "start": "19:00",
+    "price": "adv:2800(+1D) / door:3300(+1D)",
+    "artists": [
+      "おりばー（大阪）",
+      "大翡 翠(大阪)",
+      "夜敷",
+      "みせばや",
+      "KANABAND"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  }
+]

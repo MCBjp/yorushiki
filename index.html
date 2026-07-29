@@ -22,6 +22,96 @@
 
 <main class="home-main">
 
+  <section
+    class="home-gallery"
+    aria-label="夜敷 アーティスト写真"
+  >
+    <div class="home-gallery-viewport">
+
+      <div
+        id="home-gallery-track"
+        class="home-gallery-track"
+      >
+        <figure class="home-gallery-slide">
+          <img
+            src="images/Artistphoto1.jpeg"
+            alt="夜敷 アーティスト写真 1"
+            width="1600"
+            height="1067"
+            loading="eager"
+            decoding="async"
+          >
+        </figure>
+
+        <figure class="home-gallery-slide">
+          <img
+            src="images/Artistphoto2.jpeg"
+            alt="夜敷 アーティスト写真 2"
+            width="1600"
+            height="1067"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <figure class="home-gallery-slide">
+          <img
+            src="images/Artistphoto3.jpeg"
+            alt="夜敷 アーティスト写真 3"
+            width="1600"
+            height="1067"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+      </div>
+
+      <button
+        type="button"
+        class="home-gallery-button home-gallery-button-prev"
+        aria-label="前の写真を見る"
+      >
+        <span aria-hidden="true">‹</span>
+      </button>
+
+      <button
+        type="button"
+        class="home-gallery-button home-gallery-button-next"
+        aria-label="次の写真を見る"
+      >
+        <span aria-hidden="true">›</span>
+      </button>
+
+      <div
+        class="home-gallery-dots"
+        aria-label="写真の切り替え"
+      >
+        <button
+          type="button"
+          class="home-gallery-dot is-active"
+          aria-label="1枚目の写真を表示"
+          aria-current="true"
+          data-slide-index="0"
+        ></button>
+
+        <button
+          type="button"
+          class="home-gallery-dot"
+          aria-label="2枚目の写真を表示"
+          data-slide-index="1"
+        ></button>
+
+        <button
+          type="button"
+          class="home-gallery-dot"
+          aria-label="3枚目の写真を表示"
+          data-slide-index="2"
+        ></button>
+      </div>
+
+    </div>
+  </section>
+
   <section class="section home-section home-latest">
     <div class="container">
 
@@ -43,12 +133,12 @@
         <h2>次回ライブ</h2>
       </div>
 
-    <div class="feature-card home-live-card" id="home-live-content">
-  <p class="small-label">COMING SOON</p>
-  <p class="home-live-message">
-    現在、出演予定のライブはありません。
-  </p>
-</div>
+      <div class="feature-card home-live-card" id="home-live-content">
+        <p class="small-label">COMING SOON</p>
+        <p class="home-live-message">
+          現在、出演予定のライブはありません。
+        </p>
+      </div>
 
     </div>
   </section>

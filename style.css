@@ -133,17 +133,18 @@ a {
   width: 100%;
   height: 100%;
   display: flex;
-  transform: translateX(0);
-  transition: transform 0.45s ease;
-  will-change: transform;
-  touch-action: pan-y;
-  user-select: none;
-  cursor: grab;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
 
-.home-gallery-track.is-dragging {
-  transition: none;
-  cursor: grabbing;
+.home-gallery-track::-webkit-scrollbar {
+  display: none;
 }
 
 .home-gallery-slide {
@@ -151,6 +152,8 @@ a {
   width: 100%;
   height: 100%;
   margin: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .home-gallery-slide img {
@@ -160,6 +163,7 @@ a {
   object-fit: cover;
   object-position: center;
   pointer-events: none;
+  user-select: none;
   -webkit-user-drag: none;
 }
 
@@ -891,9 +895,6 @@ a {
     transition-duration: 0.01ms !important;
   }
 
-  .home-gallery-track {
-    transition: none;
-  }
 }
 
 /* ===== SHARED TEMPLATE COMPATIBILITY ===== */

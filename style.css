@@ -1,14 +1,15 @@
 @charset "UTF-8";
 
 :root {
-  --bg: #101114;
-  --bg-soft: #191b20;
-  --surface: #202329;
-  --text: #f2f2ef;
-  --muted: #9ea2aa;
-  --line: rgba(255, 255, 255, 0.13);
-  --accent: #315d9d;
-  --content: 1120px;
+  --bg: #0e0f12;
+  --bg-alt: #17191e;
+  --card: #1b1e24;
+  --text: #f3f3f0;
+  --muted: #9ea3ad;
+  --line: rgba(255, 255, 255, 0.14);
+  --accent: #3868aa;
+  --header-height: 72px;
+  --content-width: 1120px;
   --side: clamp(20px, 5vw, 72px);
 }
 
@@ -24,257 +25,152 @@ html {
 
 body {
   margin: 0;
+  overflow-x: hidden;
   color: var(--text);
   background: var(--bg);
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Hiragino Sans",
-    "Yu Gothic",
-    "YuGothic",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+    "Yu Gothic", "YuGothic", sans-serif;
   line-height: 1.8;
   letter-spacing: 0.04em;
-  overflow-x: hidden;
-}
-
-body.menu-open {
-  overflow: hidden;
 }
 
 a {
   color: inherit;
 }
 
-img {
-  display: block;
-  max-width: 100%;
+.container {
+  width: min(100%, var(--content-width));
+  margin-inline: auto;
 }
 
-/* ==================================================
-   HEADER
-   旧ページと新LIVEページの両方に対応
-================================================== */
+/* HEADER */
 
 .site-header {
   position: fixed;
   z-index: 100;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 76px;
-  padding: 0 var(--side);
+  inset: 0 0 auto 0;
+  height: var(--header-height);
+  padding-inline: var(--side);
+  background: #07080a;
+}
+
+.header-inner {
+  width: min(100%, var(--content-width));
+  height: 100%;
+  margin-inline: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #08090b;
 }
 
-.site-logo,
-.logo {
-  position: relative;
-  z-index: 103;
+.site-logo {
   color: #fff;
   text-decoration: none;
   font-family: serif;
-  font-size: 1.55rem;
+  font-size: 1.45rem;
   font-weight: 700;
   line-height: 1;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   white-space: nowrap;
 }
 
-/* 旧構造 */
-.global-nav,
-.site-header > nav {
-  display: flex;
-  align-items: center;
-  gap: clamp(18px, 2.5vw, 36px);
-}
-
-/* 新構造 */
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: clamp(18px, 2.5vw, 36px);
+  gap: clamp(18px, 2.4vw, 34px);
 }
 
-.global-nav a,
-.site-header > nav a,
 .desktop-nav a {
   color: #fff;
   text-decoration: none;
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  opacity: 0.8;
+  font-size: 0.72rem;
+  letter-spacing: 0.17em;
+  opacity: 0.78;
 }
 
-.global-nav a:hover,
-.global-nav a[aria-current="page"],
-.site-header > nav a:hover,
-.site-header > nav a[aria-current="page"],
-.desktop-nav a:hover,
-.desktop-nav a[aria-current="page"] {
+.desktop-nav a:hover {
   opacity: 1;
 }
 
-/* 不要な入力欄を確実に非表示 */
-.menu-toggle,
-.live-tab-radio,
-.live-tab-control {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  margin: -1px !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  clip: rect(0 0 0 0) !important;
-  clip-path: inset(50%) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-/* 旧ハンバーガー */
-.menu-button {
-  display: none;
-  position: relative;
-  z-index: 103;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.menu-button span {
-  position: absolute;
-  right: 2px;
-  width: 26px;
-  height: 1px;
-  background: #fff;
-  transition:
-    top 0.22s ease,
-    transform 0.22s ease;
-}
-
-.menu-button span:first-child {
-  top: 14px;
-}
-
-.menu-button span:last-child {
-  top: 23px;
-}
-
-.menu-button[aria-expanded="true"] span:first-child,
-.menu-toggle:checked + .menu-button span:first-child {
-  top: 19px;
-  transform: rotate(45deg);
-}
-
-.menu-button[aria-expanded="true"] span:last-child,
-.menu-toggle:checked + .menu-button span:last-child {
-  top: 19px;
-  transform: rotate(-45deg);
-}
-
-/* 新detailsハンバーガー */
 .mobile-menu {
   display: none;
 }
 
-/* ==================================================
-   HOME
-================================================== */
+/* HERO */
 
 .hero {
   min-height: 100svh;
-  padding: 120px var(--side) 80px;
+  padding: calc(var(--header-height) + 60px) var(--side) 80px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   background:
-    radial-gradient(circle at 72% 30%, rgba(49, 93, 157, 0.22), transparent 35%),
-    linear-gradient(135deg, #242830 0%, #101114 50%, #050506 100%);
-}
-
-.hero-inner,
-.hero-content,
-.section > *,
-.page-header > *,
-.page-header-inner {
-  width: min(100%, var(--content));
-  margin-left: auto;
-  margin-right: auto;
+    radial-gradient(circle at 74% 28%, rgba(56, 104, 170, 0.22), transparent 35%),
+    linear-gradient(145deg, #22262d 0%, #101114 47%, #050506 100%);
 }
 
 .eyebrow,
-.feature-label,
-.hero-subtitle {
+.small-label {
+  margin: 0;
   color: var(--muted);
   font-size: 0.7rem;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.24em;
 }
 
 .hero h1 {
-  margin: 12px 0 22px;
+  margin: 14px 0 20px;
   font-family: serif;
-  font-size: clamp(5rem, 17vw, 12rem);
+  font-size: clamp(5rem, 17vw, 11rem);
   font-weight: 500;
   line-height: 0.95;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
 }
 
 .hero-copy {
+  margin: 0;
   color: rgba(255, 255, 255, 0.76);
 }
 
-/* ==================================================
-   COMMON SUBPAGES
-================================================== */
+/* COMMON */
 
 .subpage {
-  padding-top: 76px;
+  padding-top: var(--header-height);
 }
 
-.page-header {
-  padding:
-    clamp(90px, 12vw, 150px)
-    var(--side)
-    clamp(65px, 9vw, 110px);
+.page-hero {
+  padding: clamp(86px, 12vw, 145px) var(--side) clamp(58px, 8vw, 95px);
   background:
-    radial-gradient(circle at 80% 20%, rgba(49, 93, 157, 0.18), transparent 35%),
-    var(--bg-soft);
+    radial-gradient(circle at 80% 20%, rgba(56, 104, 170, 0.18), transparent 36%),
+    var(--bg-alt);
 }
 
-.page-header h1 {
+.page-hero h1 {
   max-width: 100%;
   margin: 10px 0 0;
-  font-size: clamp(2.7rem, 8vw, 7rem);
+  font-size: clamp(3rem, 9vw, 7rem);
+  font-weight: 650;
   line-height: 1;
   letter-spacing: 0.06em;
   overflow-wrap: anywhere;
 }
 
 .section {
-  padding: clamp(70px, 10vw, 130px) var(--side);
+  padding: clamp(72px, 10vw, 130px) var(--side);
 }
 
-.section-dark {
-  background: var(--bg-soft);
+.section-alt {
+  background: var(--bg-alt);
 }
 
 .section-heading {
-  margin-bottom: clamp(45px, 7vw, 80px);
+  margin-bottom: clamp(42px, 7vw, 76px);
   display: flex;
   align-items: baseline;
   gap: 18px;
   border-bottom: 1px solid var(--line);
 }
 
-.section-number {
-  margin: 0 0 18px;
+.section-heading span {
+  margin-bottom: 18px;
   color: var(--accent);
   font-size: 0.68rem;
 }
@@ -292,10 +188,10 @@ img {
 }
 
 .latest-item {
-  padding: 24px 0;
+  padding: 23px 0;
   display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 28px;
+  grid-template-columns: 145px minmax(0, 1fr);
+  gap: 24px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -309,37 +205,34 @@ img {
 }
 
 .feature-card,
-.empty-state,
-.contact-box {
-  padding: clamp(30px, 6vw, 70px);
+.contact-card,
+.member-card {
+  padding: clamp(28px, 5vw, 58px);
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.018);
+  border-radius: 20px;
+  background: var(--card);
 }
 
 .feature-card h3 {
-  margin: 8px 0 28px;
-  font-size: clamp(1.4rem, 4vw, 2.5rem);
+  margin: 8px 0 26px;
+  font-size: clamp(1.3rem, 4vw, 2.4rem);
   font-weight: 500;
 }
 
-.text-link {
+.inline-link {
   display: inline-block;
-  margin-top: 20px;
+  margin-top: 18px;
   text-underline-offset: 7px;
-  font-size: 0.74rem;
-  letter-spacing: 0.18em;
+  font-size: 0.73rem;
+  letter-spacing: 0.17em;
 }
-
-/* ==================================================
-   DISCOGRAPHY / PROFILE / CONTACT
-================================================== */
 
 .release-preview,
 .discography-item,
 .profile-layout {
   display: grid;
   grid-template-columns: minmax(260px, 440px) minmax(0, 1fr);
-  gap: clamp(38px, 8vw, 100px);
+  gap: clamp(36px, 8vw, 96px);
   align-items: center;
 }
 
@@ -351,179 +244,161 @@ img {
   place-items: center;
   border: 1px solid var(--line);
   background:
-    linear-gradient(145deg, rgba(49, 93, 157, 0.22), transparent 45%),
-    #16181c;
-  color: rgba(255, 255, 255, 0.4);
+    linear-gradient(145deg, rgba(56, 104, 170, 0.22), transparent 46%),
+    #15171b;
+  color: rgba(255, 255, 255, 0.42);
   font-size: 0.7rem;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.24em;
 }
 
 .photo-placeholder {
   aspect-ratio: 4 / 5;
 }
 
-.release-copy,
+.release-title,
+.discography-copy h2,
+.profile-copy h2 {
+  margin: 8px 0 16px;
+  font-family: serif;
+  font-size: clamp(2.5rem, 6vw, 4.8rem);
+  font-weight: 500;
+  letter-spacing: 0.07em;
+}
+
 .discography-copy,
 .profile-copy {
   min-width: 0;
 }
 
-.release-copy h3,
-.discography-copy h2,
-.profile-copy h2 {
-  margin: 8px 0 16px;
-  font-family: serif;
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-}
-
-.about-preview {
-  max-width: 760px;
-}
-
 .discography-copy p,
 .profile-copy p,
 .about-preview p,
-.contact-box p {
-  color: rgba(255, 255, 255, 0.74);
+.contact-card p {
+  color: rgba(255, 255, 255, 0.75);
 }
 
-.release-date {
+.release-date,
+.note {
   color: var(--muted) !important;
   font-size: 0.74rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
 }
 
-.button-row {
-  margin-top: 30px;
-}
-
-.button {
+.pill-link {
   display: inline-flex;
-  min-width: 160px;
   min-height: 48px;
-  padding: 10px 28px;
+  margin-top: 28px;
+  padding: 10px 24px;
   align-items: center;
   justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
   color: #fff;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.4);
   font-size: 0.72rem;
-  letter-spacing: 0.2em;
+  font-weight: 700;
+  letter-spacing: 0.14em;
 }
 
-.member-list {
-  margin-top: 45px;
+.member-grid {
+  margin-top: 40px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
 }
 
-.member-item {
-  padding: 24px;
-  border: 1px solid var(--line);
+.member-card {
+  padding: 22px;
+  border-radius: 14px;
 }
 
-.member-item h3,
-.member-item p {
-  margin: 0;
+.member-card h3,
+.member-card p {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.contact-box {
+.contact-card {
   max-width: 820px;
 }
 
 .contact-mail {
   display: inline-block;
-  margin-top: 24px;
-  font-size: clamp(1.1rem, 3vw, 2rem);
+  margin-top: 22px;
+  font-size: clamp(1.05rem, 3vw, 1.9rem);
   text-underline-offset: 8px;
   word-break: break-all;
 }
 
-.note {
-  margin-top: 30px;
-  color: var(--muted) !important;
-  font-size: 0.75rem;
-}
-
-/* ==================================================
-   LIVE
-================================================== */
+/* LIVE */
 
 .live-section {
   position: relative;
 }
 
-.live-tabs {
-  width: min(100%, 760px);
-  margin: 0 auto clamp(38px, 6vw, 62px);
-  padding: 8px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  background: var(--bg-soft);
-  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.22);
+.tab-input {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  opacity: 0 !important;
 }
 
-.live-tabs button,
-.live-tabs label {
-  min-height: 58px;
-  padding: 12px 18px;
+.tab-bar {
+  width: min(100%, 760px);
+  margin: 0 auto clamp(38px, 6vw, 60px);
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 19px;
+  background: var(--bg-alt);
+}
+
+.tab-bar label {
+  min-height: 56px;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 0;
-  border-radius: 14px;
+  border-radius: 13px;
   color: var(--muted);
-  background: transparent;
   cursor: pointer;
-  font: inherit;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
 }
 
-.live-tab.is-active,
-#live-upcoming:checked ~ .live-tabs label[for="live-upcoming"],
-#live-past:checked ~ .live-tabs label[for="live-past"] {
+#tab-upcoming:checked ~ .tab-bar label[for="tab-upcoming"],
+#tab-past:checked ~ .tab-bar label[for="tab-past"] {
   color: #fff;
   background: var(--accent);
 }
 
-.live-panel[hidden] {
-  display: none !important;
-}
-
-.live-tab-control ~ .live-panels .live-panel,
-.live-tab-radio ~ .live-panels .live-panel {
+.tab-panel {
   display: none;
 }
 
-#live-upcoming:checked ~ .live-panels .live-panel-upcoming {
+#tab-upcoming:checked ~ .tab-panels .panel-upcoming {
   display: block;
 }
 
-#live-past:checked ~ .live-panels .live-panel-past {
+#tab-past:checked ~ .tab-panels .panel-past {
   display: block;
-}
-
-.live-card-list {
-  display: grid;
-  gap: 22px;
 }
 
 .live-card {
-  padding: clamp(26px, 5vw, 50px);
+  padding: clamp(26px, 5vw, 48px);
   border: 1px solid var(--line);
-  border-radius: 24px;
+  border-radius: 22px;
   background:
-    linear-gradient(145deg, rgba(49, 93, 157, 0.08), transparent 42%),
-    var(--bg-soft);
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.22);
+    linear-gradient(145deg, rgba(56, 104, 170, 0.08), transparent 42%),
+    var(--card);
 }
 
 .live-card-top {
@@ -540,19 +415,19 @@ img {
   color: var(--muted);
 }
 
-.live-date-year {
+.date-year {
   font-size: 0.8rem;
   letter-spacing: 0.12em;
 }
 
-.live-date-main {
+.date-main {
   color: var(--text);
   font-size: clamp(1.8rem, 6vw, 3rem);
   font-weight: 700;
   letter-spacing: 0.04em;
 }
 
-.live-badge {
+.status-badge {
   flex-shrink: 0;
   padding: 8px 15px;
   border-radius: 999px;
@@ -563,15 +438,14 @@ img {
   letter-spacing: 0.1em;
 }
 
-.live-badge-past {
-  color: #c3c6cc;
-  background: #33363d;
+.status-past {
+  color: #c5c8cf;
+  background: #353840;
 }
 
 .live-card h2 {
-  margin: 26px 0 36px;
-  color: var(--text);
-  font-size: clamp(2rem, 7vw, 4.4rem);
+  margin: 26px 0 34px;
+  font-size: clamp(2rem, 7vw, 4.2rem);
   font-weight: 650;
   line-height: 1.15;
   letter-spacing: 0.04em;
@@ -583,10 +457,10 @@ img {
 }
 
 .live-details div {
-  padding: 22px 0;
+  padding: 21px 0;
   display: grid;
-  grid-template-columns: 170px 1fr;
-  gap: 24px;
+  grid-template-columns: 165px minmax(0, 1fr);
+  gap: 22px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -594,7 +468,7 @@ img {
   color: var(--muted);
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.13em;
 }
 
 .live-details dd {
@@ -602,121 +476,48 @@ img {
   color: rgba(255, 255, 255, 0.82);
 }
 
-.live-contact-link {
-  display: inline-flex;
-  min-height: 50px;
-  margin-top: 30px;
-  padding: 12px 24px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  border-radius: 999px;
-  color: #fff;
-  background: transparent;
-  text-decoration: none;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-}
-
-/* ==================================================
-   FOOTER
-================================================== */
+/* FOOTER */
 
 .site-footer {
-  padding: 28px var(--side);
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
+  padding: 26px var(--side);
   border-top: 1px solid var(--line);
-  background: #08090b;
-  color: var(--muted);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
+  background: #07080a;
 }
 
-.site-footer p {
+.footer-inner {
+  width: min(100%, var(--content-width));
+  margin-inline: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.11em;
+}
+
+.footer-inner p {
   margin: 0;
 }
 
-.site-footer a {
+.footer-inner a {
   text-decoration: none;
 }
 
-/* ==================================================
-   MOBILE
-================================================== */
+/* MOBILE */
 
 @media (max-width: 780px) {
-  .site-header {
-    height: 68px;
+  :root {
+    --header-height: 64px;
   }
 
-  .site-logo,
-  .logo {
-    font-size: 1.38rem;
+  .site-logo {
+    font-size: 1.3rem;
   }
 
   .desktop-nav {
     display: none;
   }
 
-  /* 旧HTML用 */
-  .menu-button {
-    display: block;
-  }
-
-  .global-nav,
-  .site-header > nav.global-nav {
-    position: fixed;
-    z-index: 101;
-    top: 68px;
-    right: 12px;
-    left: auto;
-    width: min(74vw, 280px);
-    padding: 10px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    background: #050607;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-8px);
-    transition:
-      opacity 0.2s ease,
-      visibility 0.2s ease,
-      transform 0.2s ease;
-  }
-
-  .global-nav.is-open,
-  .menu-toggle:checked ~ .global-nav {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  .global-nav a,
-  .site-header > nav.global-nav a {
-    width: 100%;
-    padding: 12px 4px;
-    border-bottom: 1px solid var(--line);
-    color: #fff;
-    text-align: right;
-    text-decoration: none;
-    font-size: 0.78rem;
-    letter-spacing: 0.14em;
-  }
-
-  .global-nav a:last-child,
-  .site-header > nav.global-nav a:last-child {
-    border-bottom: 0;
-  }
-
-  /* 新LIVE HTML用 */
   .mobile-menu {
     position: relative;
     display: block;
@@ -738,31 +539,29 @@ img {
     content: "";
   }
 
-  .mobile-menu summary span {
+  .menu-line {
     position: absolute;
     right: 1px;
-    width: 26px;
+    width: 25px;
     height: 1px;
     background: #fff;
-    transition:
-      top 0.2s ease,
-      transform 0.2s ease;
+    transition: top 0.2s ease, transform 0.2s ease;
   }
 
-  .mobile-menu summary span:first-child {
+  .menu-line:first-child {
     top: 14px;
   }
 
-  .mobile-menu summary span:last-child {
+  .menu-line:last-child {
     top: 23px;
   }
 
-  .mobile-menu[open] summary span:first-child {
+  .mobile-menu[open] .menu-line:first-child {
     top: 19px;
     transform: rotate(45deg);
   }
 
-  .mobile-menu[open] summary span:last-child {
+  .mobile-menu[open] .menu-line:last-child {
     top: 19px;
     transform: rotate(-45deg);
   }
@@ -770,52 +569,49 @@ img {
   .mobile-nav {
     position: absolute;
     z-index: 110;
-    top: 48px;
+    top: 46px;
     right: 0;
-    width: min(74vw, 280px);
-    padding: 10px 16px;
+    width: min(74vw, 270px);
+    padding: 8px 15px;
     display: flex;
     flex-direction: column;
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: 13px;
     background: #050607;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
   }
 
   .mobile-nav a {
-    padding: 12px 4px;
+    padding: 11px 3px;
     border-bottom: 1px solid var(--line);
     color: #fff;
     text-align: right;
     text-decoration: none;
-    font-size: 0.78rem;
-    letter-spacing: 0.14em;
+    font-size: 0.75rem;
+    letter-spacing: 0.13em;
   }
 
   .mobile-nav a:last-child {
     border-bottom: 0;
   }
 
-  .hero {
-    align-items: flex-end;
-  }
-
   .hero h1 {
-    font-size: clamp(5.2rem, 28vw, 8.5rem);
+    font-size: clamp(5rem, 27vw, 8rem);
   }
 
-  .subpage {
-    padding-top: 68px;
-  }
-
-  .page-header h1 {
-    font-size: clamp(2.3rem, 11vw, 4.6rem);
+  .page-hero h1 {
+    font-size: clamp(2.4rem, 11vw, 4.8rem);
     letter-spacing: 0.035em;
+  }
+
+  .page-hero h1.long-title {
+    font-size: clamp(2rem, 9.6vw, 4rem);
+    letter-spacing: 0.015em;
   }
 
   .latest-item {
     grid-template-columns: 1fr;
-    gap: 6px;
+    gap: 5px;
   }
 
   .release-preview,
@@ -824,33 +620,32 @@ img {
     grid-template-columns: 1fr;
   }
 
-  .member-list {
+  .member-grid {
     grid-template-columns: 1fr;
   }
 
-  .live-tabs {
-    border-radius: 17px;
+  .tab-bar {
+    border-radius: 16px;
   }
 
-  .live-tabs button,
-  .live-tabs label {
-    min-height: 54px;
-    padding-inline: 8px;
-    border-radius: 12px;
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
+  .tab-bar label {
+    min-height: 52px;
+    padding-inline: 7px;
+    border-radius: 11px;
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
   }
 
   .live-card {
-    border-radius: 20px;
+    border-radius: 19px;
   }
 
   .live-details div {
     grid-template-columns: 1fr;
-    gap: 5px;
+    gap: 4px;
   }
 
-  .site-footer {
+  .footer-inner {
     flex-direction: column;
   }
 }

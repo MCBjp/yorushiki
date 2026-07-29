@@ -1,1 +1,128 @@
-.
+@charset "UTF-8";
+
+:root{
+  --bg:#111214;
+  --bg2:#1a1c20;
+  --text:#f3f3f3;
+  --sub:#9ca0a8;
+  --accent:#2d5b98;
+  --line:rgba(255,255,255,.12);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+  line-height:1.8;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.site-header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  padding:24px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(12px);
+}
+
+.logo{
+  font-size:1.8rem;
+  letter-spacing:.2em;
+}
+
+nav{
+  display:flex;
+  gap:24px;
+}
+
+nav a{
+  font-size:.8rem;
+  letter-spacing:.15em;
+}
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:
+    radial-gradient(circle at top right, rgba(45,91,152,.25), transparent 35%),
+    linear-gradient(#20242a,#0f1012);
+}
+
+.hero h1{
+  font-size:clamp(4rem,12vw,8rem);
+  letter-spacing:.15em;
+  font-family:serif;
+}
+
+.hero p:first-child{
+  color:var(--sub);
+  letter-spacing:.3em;
+  font-size:.75rem;
+}
+
+section{
+  padding:120px 8%;
+}
+
+section:nth-child(even){
+  background:var(--bg2);
+}
+
+h2{
+  font-size:2.6rem;
+  margin-bottom:32px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:16px;
+  letter-spacing:.1em;
+}
+
+footer{
+  padding:40px;
+  text-align:center;
+  border-top:1px solid var(--line);
+  color:var(--sub);
+}
+
+@media(max-width:768px){
+
+.site-header{
+  flex-direction:column;
+  gap:18px;
+}
+
+nav{
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.hero h1{
+  font-size:5rem;
+}
+
+section{
+  padding:90px 24px;
+}
+
+}

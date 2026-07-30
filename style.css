@@ -69,19 +69,14 @@ a {
 }
 
 .site-logo {
-  width: clamp(108px, 16vw, 148px);
-  height: clamp(30px, 4.4vw, 42px);
-  display: block;
-  background-image: url("images/logo.jpeg");
-  background-repeat: no-repeat;
-  background-position: left center;
-  background-size: contain;
-  color: transparent;
+  color: #fff;
   text-decoration: none;
+  font-family: serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.16em;
   white-space: nowrap;
-  overflow: hidden;
-  text-indent: 100%;
-  flex-shrink: 0;
 }
 
 .desktop-nav {
@@ -685,8 +680,7 @@ a {
   }
 
   .site-logo {
-    width: 112px;
-    height: 32px;
+    font-size: 1.3rem;
   }
 
   .desktop-nav {

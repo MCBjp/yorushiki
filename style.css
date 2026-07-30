@@ -1266,14 +1266,16 @@ a {
 
 /* ===== LIVE COMPACT REDESIGN ===== */
 
-.live-page .page-header {
+.live-page .page-header,
+.compact-page .page-header {
   padding:
     clamp(30px, 4vw, 48px)
     var(--side)
     clamp(28px, 4vw, 44px);
 }
 
-.live-page .page-header h1 {
+.live-page .page-header h1,
+.compact-page .page-header h1 {
   margin: 0;
   font-size: clamp(1.15rem, 2.2vw, 1.45rem);
   font-weight: 500;
@@ -1306,18 +1308,21 @@ a {
 }
 
 @media (max-width: 780px) {
-  .live-page .page-header {
+  .live-page .page-header,
+  .compact-page .page-header {
     padding:
       26px
       var(--side)
       24px;
   }
 
-  .live-page .page-header h1 {
+  .live-page .page-header h1,
+  .compact-page .page-header h1 {
     font-size: 1.05rem;
   }
 
-  .live-page .section {
+  .live-page .section,
+  .compact-page .section {
     padding-top: 42px;
   }
 

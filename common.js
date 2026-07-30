@@ -3,59 +3,58 @@ async function loadCommonParts() {
   const footerHost = document.getElementById("site-footer");
 
   if (headerHost) {
-    const response = await fetch("header.html");
-
-    if (!response.ok) {
-      throw new Error(`header.html の読み込みに失敗しました: ${response.status}`);
-    }
-
-    headerHost.innerHTML = await response.text();
+    const res = await fetch("header.html");
+    headerHost.innerHTML = await res.text();
   }
 
   if (footerHost) {
-    const response = await fetch("footer.html");
+    const res = await fetch("footer.html");
+    footerHost.innerHTML = await res.text();
 
-    if (!response.ok) {
-      throw new Error(`footer.html の読み込みに失敗しました: ${response.status}`);
+    const year = footerHost.querySelector("#current-year");
+
+    if (year) {
+      year.textContent = new Date().getFullYear();
     }
 
-    footerHost.innerHTML = await response.text();
+    const copyright =
+      year?.closest("p") ||
+      footerHost.querySelector(".footer-inner p");
 
-    const currentYear = footerHost.querySelector("#current-year");
+    if (
+      copyright &&
+      !copyright.querySelector(".footer-photo-credit")
+    ) {
+      const credit = document.createElement("span");
 
-    if (currentYear) {
-      currentYear.textContent = new Date().getFullYear();
+      credit.className = "footer-photo-credit";
+      credit.textContent = "photo by Noriko Akiyama";
+
+      credit.style.display = "block";
+      credit.style.marginTop = "4px";
+      credit.style.color = "inherit";
+      credit.style.fontSize = "0.9em";
+      credit.style.letterSpacing = "0.08em";
+
+      copyright.appendChild(credit);
     }
   }
 
-  const mobileMenu = document.querySelector(".mobile-menu");
+  const menu = document.querySelector(".mobile-menu");
 
-  if (mobileMenu) {
-    const menuDismiss = mobileMenu.querySelector(".menu-dismiss");
+  if (menu) {
+    const dismiss = menu.querySelector(".menu-dismiss");
 
-    menuDismiss?.addEventListener("click", () => {
-      mobileMenu.removeAttribute("open");
+    dismiss?.addEventListener("click", () => {
+      menu.removeAttribute("open");
     });
 
-    document.addEventListener("click", (event) => {
-      if (
-        mobileMenu.hasAttribute("open") &&
-        !mobileMenu.contains(event.target)
-      ) {
-        mobileMenu.removeAttribute("open");
+    document.addEventListener("click", (e) => {
+      if (menu.open && !menu.contains(e.target)) {
+        menu.removeAttribute("open");
       }
-    });
-
-    mobileMenu.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        mobileMenu.removeAttribute("open");
-      });
     });
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadCommonParts().catch((error) => {
-    console.error(error);
-  });
-});
+document.addEventListener("DOMContentLoaded", loadCommonParts);

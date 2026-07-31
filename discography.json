@@ -12,5 +12,14 @@
       }
     ],
     "visible": true
+  },
+  {
+    "title": "猫×雨×夜",
+    "releaseDate": "2024-07-07",
+    "type": "EP",
+    "image": "images/nekoameyoru.jpeg",
+    "description": "1. 雨、時々ユウウツ\n2. 何かの変化\n3. 下から見た上\n4. 四転八転",
+    "links": [],
+    "visible": true
   }
 ]

@@ -1414,3 +1414,68 @@ a {
     margin-top:0;
   }
 }
+
+/* ===== LIVE PC COMPACT SIZE ===== */
+
+@media (min-width: 781px) {
+  .live-page .section {
+    padding-top: 46px;
+    padding-bottom: 64px;
+  }
+
+  .live-page .live-tabs {
+    margin-bottom: 30px;
+  }
+
+  .live-page .live-card {
+    padding: 26px 30px 30px;
+    border-radius: 16px;
+  }
+
+  .live-page .live-card-top {
+    gap: 14px;
+  }
+
+  .live-page .live-card time {
+    gap: 8px;
+  }
+
+  .live-page .live-date-year,
+  .live-page .live-date-main {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.035em;
+  }
+
+  .live-page .live-card h2 {
+    margin: 18px 0 22px;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.55;
+    letter-spacing: 0.025em;
+  }
+
+  .live-page .live-details div {
+    padding: 14px 0;
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .live-page .live-details dt {
+    font-size: 0.64rem;
+    letter-spacing: 0.11em;
+  }
+
+  .live-page .live-details dd {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .live-page .live-contact-link {
+    min-height: 42px;
+    margin-top: 22px;
+    padding: 8px 20px;
+    font-size: 0.66rem;
+  }
+}

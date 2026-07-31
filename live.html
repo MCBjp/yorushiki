@@ -8,7 +8,7 @@
   <title>LIVE | 夜敷 Official Website</title>
   <meta name="description" content="夜敷のライブスケジュールと過去の出演情報。">
 
-  <link rel="stylesheet" href="style.css?v=17">
+  <link rel="stylesheet" href="style.css?v=18">
   <script src="common.js" defer></script>
   <script src="live.js?v=2" defer></script>
 
@@ -63,6 +63,12 @@
 
     .live-card[hidden] {
       display: none !important;
+    }
+
+    #live-upcoming:checked ~ .live-sticky-controls .live-tabs label[for="live-upcoming"],
+    #live-past:checked ~ .live-sticky-controls .live-tabs label[for="live-past"] {
+      color: #fff;
+      background: var(--accent, #3868aa);
     }
 
     @media (max-width: 780px) {

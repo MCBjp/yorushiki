@@ -1511,3 +1511,51 @@ a {
     font-size: 1.1rem;
   }
 }
+
+/* ===== HOME RELEASE MOBILE HORIZONTAL ===== */
+@media (max-width: 780px) {
+  .home-release .release-preview {
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+  }
+
+  .home-release .artwork-placeholder {
+    width: 120px;
+    max-width: 100%;
+  }
+
+  .home-release .release-copy {
+    min-width: 0;
+  }
+
+  .home-release .release-title {
+    margin: 6px 0 10px;
+    font-size: 1rem;
+    line-height: 1.55;
+    letter-spacing: 0.04em;
+    overflow-wrap: anywhere;
+  }
+
+  .home-release .release-copy .release-date {
+    margin: 8px 0 0;
+    font-size: 0.68rem;
+    line-height: 1.6;
+  }
+
+  .home-release .inline-link {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .home-release .release-preview {
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 15px;
+  }
+
+  .home-release .artwork-placeholder {
+    width: 110px;
+  }
+}
+

@@ -1,5 +1,158 @@
 [
   {
+    "date": "2024-02-12",
+    "title": "GROK!!! vol.7",
+    "venue": "東高円寺U.F.O.CLUB",
+    "open": "",
+    "start": "",
+    "price": "",
+    "artists": [
+      "バラバジャガ",
+      "山崎怠雅+野口英律+箕輪政博",
+      "豊川座敷の夜敷",
+      "ろくろ"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
+    "date": "2024-04-12",
+    "title": "清濁併せ吞む",
+    "venue": "吉祥寺ブラック&ブルー",
+    "open": "",
+    "start": "",
+    "price": "",
+    "artists": [
+      "豊川座敷の夜敷",
+      "らいむらいと",
+      "中村アリーとTIG-HUGS"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
+    "date": "2024-06-02",
+    "title": "Electric Cow Murder",
+    "venue": "東高円寺U.F.O.CLUB",
+    "open": "",
+    "start": "",
+    "price": "",
+    "artists": [
+      "MARBLE SHEEP",
+      "夜光虫",
+      "バラナンブ",
+      "豊川座敷の夜敷"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
+    "date": "2024-07-07",
+    "title": "流星ロックンロールナイト！",
+    "venue": "吉祥寺ブラック&ブルー",
+    "open": "",
+    "start": "",
+    "price": "",
+    "artists": [
+      "SUPER ROCK'N'ROLLERS",
+      "豊川座敷の夜敷",
+      "ジョー長岡トリオ",
+      "Tuberose",
+      "HIGH LIMIT 185"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
+    "date": "2024-10-29",
+    "title": "Tune in Mind",
+    "venue": "東高円寺U.F.O.CLUB",
+    "open": "",
+    "start": "",
+    "price": "",
+    "artists": [
+      "豊川座敷の夜敷",
+      "杏仁クルーエル",
+      "日本少女(京都)",
+      "Plan M."
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
+    "date": "2024-11-24",
+    "title": "B&B Power Push",
+    "venue": "吉祥寺ブラック&ブルー",
+    "open": "",
+    "start": "",
+    "price": "",
+    "artists": [
+      "məjə",
+      "少年発電ホールディングス",
+      "豊川座敷の夜敷",
+      "ricca"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
+    "date": "2025-01-20",
+    "title": "UFOCLUB29周年記念 Inspiration & Power",
+    "venue": "東高円寺U.F.O.CLUB",
+    "open": "",
+    "start": "",
+    "price": "",
+    "artists": [
+      "ひぐらし",
+      "やまぐちももえーず(極)",
+      "巨大石球",
+      "豊川座敷の夜敷"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
+    "date": "2025-02-23",
+    "title": "トリップナイト ドリップフィーバーvol.1",
+    "venue": "東高円寺U.F.O.CLUB",
+    "open": "",
+    "start": "",
+    "price": "",
+    "artists": [
+      "豊川座敷の夜敷",
+      "亀のちのちKIRIA",
+      "山崎怠雅カルテット",
+      "ろくろ"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
+    "date": "2025-05-10",
+    "title": "B＆B 19th Anniversary”Long Live Rock”",
+    "venue": "吉祥寺ブラック&ブルー",
+    "open": "",
+    "start": "",
+    "price": "",
+    "artists": [
+      "豊川座敷の夜敷",
+      "地球がくそやばい。",
+      "HIGH LIMIT 185",
+      "Dannie B.Good"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
     "date": "2025-09-04",
     "title": "HIPPIHAPPISHAKE",
     "venue": "新宿赤布",
@@ -42,6 +195,23 @@
     "artists": [
       "The MakeeZ",
       "にたないけん（ジョズエ）"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
+    "date": "2026-03-01",
+    "title": "LEAP BEFORE YOU LOOK!",
+    "venue": "東高円寺U.F.O.CLUB",
+    "open": "",
+    "start": "",
+    "price": "",
+    "artists": [
+      "バンド四段",
+      "豊川座敷の夜敷",
+      "ぶどうジュース",
+      "純情マゼラン"
     ],
     "ticketUrl": "",
     "note": "",

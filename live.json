@@ -1,5 +1,53 @@
 [
   {
+    "date": "2025-09-04",
+    "title": "HIPPIHAPPISHAKE",
+    "venue": "新宿赤布",
+    "open": "",
+    "start": "",
+    "price": "前売 ¥3000（+1D）/当日 ¥3500（+1D）",
+    "artists": [
+      "Don Matsuo Group",
+      "モンスターロシモフ",
+      "ヴィヴィアン2",
+      "豊川座敷の夜敷"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
+    "date": "2025-10-12",
+    "title": "パワー脱臭⑦",
+    "venue": "西荻窪FLAT",
+    "open": "",
+    "start": "",
+    "price": "¥2700/¥3000",
+    "artists": [
+      "チッツ",
+      "computer fight",
+      "豊川座敷の夜敷"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
+    "date": "2025-11-22",
+    "title": "トリップナイト ドリップフィーバー Vol.3",
+    "venue": "阿佐ヶ谷mogumogu",
+    "open": "",
+    "start": "",
+    "price": "",
+    "artists": [
+      "The MakeeZ",
+      "にたないけん（ジョズエ）"
+    ],
+    "ticketUrl": "",
+    "note": "",
+    "visible": true
+  },
+  {
     "date": "2026-07-11",
     "title": "トリップナイト ドリップフィーバーvol.4 大阪結露編",
     "venue": "梅田HARD RAIN",

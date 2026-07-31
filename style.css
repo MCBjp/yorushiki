@@ -1500,3 +1500,14 @@ a {
     max-height: none;
   }
 }
+
+/* ===== HOME RELEASE PC SIZE ===== */
+@media (min-width: 781px) {
+  .home-release .release-preview {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .home-release .release-title {
+    font-size: 1.1rem;
+  }
+}

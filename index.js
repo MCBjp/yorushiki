@@ -395,11 +395,7 @@ async function loadNextLive() {
   box.innerHTML = `
     <div class="home-live-meta">
       <p class="home-live-date">
-        ${escapeHtml(formatDate(next.date || ""))}
-      </p>
-
-      <p class="home-live-venue">
-        ${escapeHtml(next.venue || "")}
+        ${escapeHtml(formatDate(next.date || ""))} / ${escapeHtml(next.venue || "")}
       </p>
     </div>
 
@@ -484,16 +480,6 @@ function ensureHomeLiveStyles() {
       overflow-wrap: anywhere;
     }
 
-    @media (min-width: 781px) {
-      #home-live-content .home-live-meta {
-        justify-content: flex-start;
-        gap: 0.35em;
-      }
-
-      #home-live-content .home-live-venue {
-        text-align: left;
-      }
-    }
 
     @media (max-width: 420px) {
       #home-live-content.home-live-card {

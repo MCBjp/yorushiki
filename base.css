@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/* base.css placeholder */
+:root {
+  --bg: #0e0f12;
+  --bg-alt: #17191e;
+  --card: #1b1e24;
+  --text: #f3f3f0;
+  --muted: #9ea3ad;
+  --line: rgba(255,255,255,.14);
+  --accent: #3868aa;
+  --header-height: 72px;
+  --content-width: 1120px;
+  --side: clamp(20px,5vw,72px);
+}

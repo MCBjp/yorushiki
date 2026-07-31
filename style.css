@@ -1439,7 +1439,7 @@ a {
   .live-page .live-card-top {
     align-items: baseline;
     justify-content: flex-start;
-    gap: 18px;
+    gap: 8px;
   }
 
   .live-page .live-card time {

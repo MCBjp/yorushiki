@@ -11,6 +11,79 @@
   <link rel="stylesheet" href="style.css?v=17">
   <script src="common.js" defer></script>
   <script src="live.js?v=2" defer></script>
+
+  <style>
+    .live-sticky-controls {
+      position: sticky;
+      top: var(--header-height, 88px);
+      z-index: 20;
+      margin: 0 calc(var(--side) * -1) 28px;
+      padding: 10px var(--side) 12px;
+      background: rgba(10, 11, 13, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .live-sticky-controls .live-tabs {
+      margin-bottom: 0;
+    }
+
+    .live-year-filter {
+      display: none;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    #live-past:checked ~ .live-sticky-controls .live-year-filter {
+      display: flex;
+    }
+
+    .live-year-button {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      padding: 7px 14px;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.68);
+      font: inherit;
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+    }
+
+    .live-year-button.is-active {
+      border-color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
+      color: #111317;
+    }
+
+    .live-card[hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 780px) {
+      .live-sticky-controls {
+        top: var(--header-height, 86px);
+        margin-bottom: 22px;
+        padding-top: 8px;
+        padding-bottom: 10px;
+      }
+
+      .live-year-filter {
+        gap: 7px;
+        margin-top: 10px;
+      }
+
+      .live-year-button {
+        padding: 7px 12px;
+        font-size: 0.68rem;
+      }
+    }
+  </style>
 </head>
 
 <body id="top" class="live-page">
@@ -42,9 +115,17 @@
       id="live-past"
     >
 
-    <div class="live-tabs" aria-label="ライブ情報">
-      <label for="live-upcoming">UPCOMING</label>
-      <label for="live-past">PAST</label>
+    <div class="live-sticky-controls">
+      <div class="live-tabs" aria-label="ライブ情報">
+        <label for="live-upcoming">UPCOMING</label>
+        <label for="live-past">PAST</label>
+      </div>
+
+      <div
+        id="live-year-filter"
+        class="live-year-filter"
+        aria-label="開催年で絞り込み"
+      ></div>
     </div>
 
     <div class="live-panels">
@@ -68,6 +149,114 @@
 </main>
 
 <footer id="site-footer" class="site-footer"></footer>
+
+<script>
+  (() => {
+    const pastList = document.getElementById('live-past-list');
+    const yearFilter = document.getElementById('live-year-filter');
+
+    if (!pastList || !yearFilter) return;
+
+    let selectedYear = null;
+    let rebuildTimer = null;
+
+    const getCardYear = (card) => {
+      const datetime = card.querySelector('time[datetime]')?.getAttribute('datetime') || '';
+      const datetimeYear = datetime.match(/^(\d{4})/);
+
+      if (datetimeYear) {
+        return datetimeYear[1];
+      }
+
+      const textYear = card.textContent.match(/\b(20\d{2})\b/);
+      return textYear ? textYear[1] : null;
+    };
+
+    const applyYearFilter = () => {
+      const cards = [...pastList.querySelectorAll('.live-card')];
+
+      cards.forEach((card) => {
+        const cardYear = getCardYear(card);
+        card.hidden = Boolean(selectedYear && cardYear !== selectedYear);
+      });
+    };
+
+    const buildYearFilter = () => {
+      const cards = [...pastList.querySelectorAll('.live-card')];
+
+      if (!cards.length) {
+        yearFilter.replaceChildren();
+        selectedYear = null;
+        return;
+      }
+
+      const years = [...new Set(
+        cards
+          .map(getCardYear)
+          .filter(Boolean)
+      )].sort((a, b) => Number(b) - Number(a));
+
+      if (!years.length) {
+        yearFilter.replaceChildren();
+        selectedYear = null;
+        return;
+      }
+
+      if (!selectedYear || !years.includes(selectedYear)) {
+        selectedYear = years[0];
+      }
+
+      const fragment = document.createDocumentFragment();
+
+      years.forEach((year) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'live-year-button';
+        button.textContent = year;
+        button.dataset.year = year;
+        button.setAttribute('aria-pressed', String(year === selectedYear));
+
+        if (year === selectedYear) {
+          button.classList.add('is-active');
+        }
+
+        button.addEventListener('click', () => {
+          selectedYear = year;
+
+          yearFilter.querySelectorAll('.live-year-button').forEach((item) => {
+            const isActive = item.dataset.year === selectedYear;
+            item.classList.toggle('is-active', isActive);
+            item.setAttribute('aria-pressed', String(isActive));
+          });
+
+          applyYearFilter();
+        });
+
+        fragment.appendChild(button);
+      });
+
+      yearFilter.replaceChildren(fragment);
+      applyYearFilter();
+    };
+
+    const scheduleBuild = () => {
+      window.clearTimeout(rebuildTimer);
+      rebuildTimer = window.setTimeout(buildYearFilter, 50);
+    };
+
+    const observer = new MutationObserver(scheduleBuild);
+    observer.observe(pastList, {
+      childList: true,
+      subtree: true
+    });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', scheduleBuild, { once: true });
+    } else {
+      scheduleBuild();
+    }
+  })();
+</script>
 
 </body>
 </html>

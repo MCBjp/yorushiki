@@ -965,11 +965,9 @@ a {
 /* Profile */
 .profile-image {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: auto;
   display: block;
   border: 1px solid var(--line);
-  object-fit: cover;
-  object-position: center;
 }
 
 .profile-content {

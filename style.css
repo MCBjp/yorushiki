@@ -1559,3 +1559,76 @@ a {
   }
 }
 
+/* ===== DISCOGRAPHY COMPACT ===== */
+
+/* PC */
+@media (min-width: 781px) {
+  .discography-item,
+  .discography-card {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+  }
+
+  .discography-item img,
+  .discography-card img,
+  .discography-cover {
+    width: 220px;
+    max-width: 100%;
+  }
+
+  .discography-item h2,
+  .discography-card h2,
+  .discography-title {
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .discography-description {
+    font-size: .95rem;
+    line-height: 1.8;
+  }
+}
+
+/* Mobile */
+@media (max-width: 780px) {
+  .discography-item,
+  .discography-card {
+    grid-template-columns: 120px minmax(0,1fr);
+    gap: 18px;
+    align-items: start;
+  }
+
+  .discography-item img,
+  .discography-card img,
+  .discography-cover {
+    width:120px;
+    max-width:100%;
+  }
+
+  .discography-title,
+  .discography-item h2,
+  .discography-card h2{
+    font-size:1rem;
+    line-height:1.5;
+  }
+
+  .discography-description{
+    font-size:.9rem;
+    line-height:1.7;
+  }
+}
+
+@media (max-width:360px){
+  .discography-item,
+  .discography-card{
+    grid-template-columns:110px minmax(0,1fr);
+  }
+
+  .discography-item img,
+  .discography-card img,
+  .discography-cover{
+    width:110px;
+  }
+}
+

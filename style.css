@@ -1757,3 +1757,36 @@ a {
   }
 }
 
+/* ===== LIVE CARD SPACING FIX ===== */
+.live-page .live-card-list,
+.compact-page .live-card-list,
+.live-page .live-panel,
+.compact-page .live-panel {
+  row-gap: 18px;
+}
+
+.live-page .live-card-list,
+.compact-page .live-card-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.live-page .live-card + .live-card,
+.compact-page .live-card + .live-card {
+  margin-top: 18px;
+}
+
+@media (max-width: 780px) {
+  .live-page .live-card-list,
+  .compact-page .live-card-list,
+  .live-page .live-panel,
+  .compact-page .live-panel {
+    row-gap: 16px;
+  }
+
+  .live-page .live-card + .live-card,
+  .compact-page .live-card + .live-card {
+    margin-top: 16px;
+  }
+}
+

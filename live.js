@@ -157,9 +157,9 @@ function createLiveCard(item, isPast) {
             ${dateParts.weekday ? `(${escapeHtml(dateParts.weekday)})` : ""}
           </span>
         </time>
-      </div>
 
-      <h2>${escapeHtml(venue || title || "LIVE")}</h2>
+        <h2>${escapeHtml(venue || title || "LIVE")}</h2>
+      </div>
 
       ${
         detailRows.length > 0

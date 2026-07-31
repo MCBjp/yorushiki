@@ -1395,3 +1395,22 @@ a {
     line-height: 1.85;
   }
 }
+
+
+/* ===== PROFILE PC ALIGNMENT ===== */
+@media (min-width: 781px) {
+  .profile-layout{
+    align-items:start;
+  }
+
+  .profile-content{
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    padding-top:0;
+  }
+
+  .profile-description{
+    margin-top:0;
+  }
+}

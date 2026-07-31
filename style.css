@@ -1486,3 +1486,16 @@ a {
     font-size: 0.66rem;
   }
 }
+
+/* ===== HOME GALLERY PC SIZE ===== */
+@media (min-width: 781px) {
+  .home-gallery {
+    width: min(88vw, 1280px);
+    margin-inline: auto;
+  }
+
+  .home-gallery-viewport {
+    aspect-ratio: 16 / 9;
+    max-height: none;
+  }
+}

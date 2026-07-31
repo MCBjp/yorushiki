@@ -1490,11 +1490,12 @@ a {
 /* ===== HOME GALLERY PC SIZE ===== */
 @media (min-width: 781px) {
   .home-gallery {
-    width: min(88vw, 1280px);
-    margin-inline: auto;
+    width: min(calc(100% - (var(--side) * 2)), 1100px);
+    margin: 32px auto 0;
   }
 
   .home-gallery-viewport {
+    width: 100%;
     aspect-ratio: 16 / 9;
     max-height: none;
   }

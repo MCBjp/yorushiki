@@ -11,7 +11,7 @@
     content="夜敷の公式ウェブサイト。ライブ情報、作品情報、プロフィールを掲載しています。"
   >
 
-  <link rel="stylesheet" href="style.css?v=20">
+  <link rel="stylesheet" href="style.css?v=21">
   <script src="common.js" defer></script>
   <script src="index.js?v=6" defer></script>
 </head>
@@ -22,89 +22,91 @@
 
 <main class="home-main">
 
-  <section
-    class="home-gallery"
-    aria-label="夜敷 アーティスト写真"
-  >
-    <div class="home-gallery-viewport">
+  <div class="home-gallery-shell">
+    <section
+      class="home-gallery"
+      aria-label="夜敷 アーティスト写真"
+    >
+      <div class="home-gallery-viewport">
 
-      <div
-        id="home-gallery-track"
-        class="home-gallery-track"
-      >
-        <figure class="home-gallery-slide">
-          <img
-            src="images/Artistphoto1.jpeg"
-            alt="夜敷 アーティスト写真 1"
-            loading="eager"
-            decoding="async"
-          >
-        </figure>
+        <div
+          id="home-gallery-track"
+          class="home-gallery-track"
+        >
+          <figure class="home-gallery-slide">
+            <img
+              src="images/Artistphoto1.jpeg"
+              alt="夜敷 アーティスト写真 1"
+              loading="eager"
+              decoding="async"
+            >
+          </figure>
 
-        <figure class="home-gallery-slide">
-          <img
-            src="images/Artistphoto2.jpeg"
-            alt="夜敷 アーティスト写真 2"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
+          <figure class="home-gallery-slide">
+            <img
+              src="images/Artistphoto2.jpeg"
+              alt="夜敷 アーティスト写真 2"
+              loading="lazy"
+              decoding="async"
+            >
+          </figure>
 
-        <figure class="home-gallery-slide">
-          <img
-            src="images/Artistphoto3.jpeg"
-            alt="夜敷 アーティスト写真 3"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
+          <figure class="home-gallery-slide">
+            <img
+              src="images/Artistphoto3.jpeg"
+              alt="夜敷 アーティスト写真 3"
+              loading="lazy"
+              decoding="async"
+            >
+          </figure>
+        </div>
+
+        <button
+          type="button"
+          class="home-gallery-button home-gallery-button-prev"
+          aria-label="前の写真を見る"
+        >
+          <span aria-hidden="true">‹</span>
+        </button>
+
+        <button
+          type="button"
+          class="home-gallery-button home-gallery-button-next"
+          aria-label="次の写真を見る"
+        >
+          <span aria-hidden="true">›</span>
+        </button>
+
+        <div
+          class="home-gallery-dots"
+          aria-label="写真の切り替え"
+        >
+          <button
+            type="button"
+            class="home-gallery-dot is-active"
+            aria-label="1枚目の写真を表示"
+            aria-current="true"
+            data-slide-index="0"
+          ></button>
+
+          <button
+            type="button"
+            class="home-gallery-dot"
+            aria-label="2枚目の写真を表示"
+            data-slide-index="1"
+          ></button>
+
+          <button
+            type="button"
+            class="home-gallery-dot"
+            aria-label="3枚目の写真を表示"
+            data-slide-index="2"
+          ></button>
+        </div>
+
       </div>
-
-      <button
-        type="button"
-        class="home-gallery-button home-gallery-button-prev"
-        aria-label="前の写真を見る"
-      >
-        <span aria-hidden="true">‹</span>
-      </button>
-
-      <button
-        type="button"
-        class="home-gallery-button home-gallery-button-next"
-        aria-label="次の写真を見る"
-      >
-        <span aria-hidden="true">›</span>
-      </button>
-
-      <div
-        class="home-gallery-dots"
-        aria-label="写真の切り替え"
-      >
-        <button
-          type="button"
-          class="home-gallery-dot is-active"
-          aria-label="1枚目の写真を表示"
-          aria-current="true"
-          data-slide-index="0"
-        ></button>
-
-        <button
-          type="button"
-          class="home-gallery-dot"
-          aria-label="2枚目の写真を表示"
-          data-slide-index="1"
-        ></button>
-
-        <button
-          type="button"
-          class="home-gallery-dot"
-          aria-label="3枚目の写真を表示"
-          data-slide-index="2"
-        ></button>
-      </div>
-
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section class="section home-section home-latest">
     <div class="container">

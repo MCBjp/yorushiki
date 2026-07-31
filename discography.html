@@ -23,29 +23,187 @@
     </div>
   </section>
 
-  <section class="section">
-    <article class="discography-item">
-      <div class="artwork-placeholder">ARTWORK</div>
-
-      <div class="discography-copy">
-        <p class="feature-label">DIGITAL RELEASE</p>
-        <h2>夜敷</h2>
-        <p class="release-date">2026.01.27 RELEASE</p>
-
-        <p>
-          作品紹介文をここに掲載します。
-          収録曲、参加メンバー、クレジット、配信先などを追加できます。
-        </p>
-
-        <div class="button-row">
-          <a class="button" href="#" aria-disabled="true">LISTEN</a>
-        </div>
-      </div>
-    </article>
-  </section>
+  <div id="discography-list"></div>
 </main>
 
 <footer id="site-footer" class="site-footer"></footer>
+
+<script>
+"use strict";
+
+const DISCOGRAPHY_JSON_FILE = "discography.json";
+
+document.addEventListener("DOMContentLoaded", function () {
+  loadDiscography().catch(function (error) {
+    console.error(error);
+    renderDiscographyError();
+  });
+});
+
+async function loadDiscography() {
+  const separator = DISCOGRAPHY_JSON_FILE.includes("?")
+    ? "&"
+    : "?";
+
+  const response = await fetch(
+    `${DISCOGRAPHY_JSON_FILE}${separator}_=${Date.now()}`,
+    {
+      cache: "no-store",
+      headers: {
+        "Cache-Control": "no-cache"
+      }
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `${DISCOGRAPHY_JSON_FILE} の読み込みに失敗しました: ${response.status}`
+    );
+  }
+
+  const value = await response.json();
+  const items = Array.isArray(value) ? value : [];
+
+  renderDiscography(items);
+}
+
+function renderDiscography(items) {
+  const list = document.getElementById("discography-list");
+
+  if (!list) {
+    return;
+  }
+
+  const visibleItems = items
+    .filter(function (item) {
+      return item && item.visible !== false;
+    })
+    .sort(function (a, b) {
+      return String(b.releaseDate || "").localeCompare(
+        String(a.releaseDate || "")
+      );
+    });
+
+  list.replaceChildren();
+
+  if (visibleItems.length === 0) {
+    const section = document.createElement("section");
+    section.className = "section";
+
+    const message = document.createElement("p");
+    message.textContent = "現在、掲載中の作品はありません。";
+
+    section.appendChild(message);
+    list.appendChild(section);
+    return;
+  }
+
+  visibleItems.forEach(function (item) {
+    const section = document.createElement("section");
+    section.className = "section";
+
+    const article = document.createElement("article");
+    article.className = "discography-item";
+
+    if (item.image) {
+      const image = document.createElement("img");
+      image.className = "artwork-placeholder";
+      image.src = String(item.image);
+      image.alt = `${String(item.title || "作品")} ジャケット`;
+      article.appendChild(image);
+    } else {
+      const artwork = document.createElement("div");
+      artwork.className = "artwork-placeholder";
+      artwork.textContent = "ARTWORK";
+      article.appendChild(artwork);
+    }
+
+    const copy = document.createElement("div");
+    copy.className = "discography-copy";
+
+    const type = document.createElement("p");
+    type.className = "feature-label";
+    type.textContent = String(item.type || "");
+    copy.appendChild(type);
+
+    const title = document.createElement("h2");
+    title.textContent = String(item.title || "");
+    copy.appendChild(title);
+
+    const releaseDate = document.createElement("p");
+    releaseDate.className = "release-date";
+    releaseDate.textContent =
+      `${formatDate(item.releaseDate || "")} RELEASE`;
+    copy.appendChild(releaseDate);
+
+    if (item.description) {
+      const description = document.createElement("p");
+      description.style.whiteSpace = "pre-line";
+      description.textContent = String(item.description);
+      copy.appendChild(description);
+    }
+
+    const links = Array.isArray(item.links)
+      ? item.links.filter(function (link) {
+          return link && String(link.url || "").trim();
+        })
+      : [];
+
+    if (links.length > 0) {
+      const buttonRow = document.createElement("div");
+      buttonRow.className = "button-row";
+
+      links.forEach(function (link) {
+        const button = document.createElement("a");
+        button.className = "button";
+        button.href = String(link.url);
+        button.textContent =
+          String(link.service || "").trim() || "LISTEN";
+        button.target = "_blank";
+        button.rel = "noopener noreferrer";
+        buttonRow.appendChild(button);
+      });
+
+      copy.appendChild(buttonRow);
+    }
+
+    article.appendChild(copy);
+    section.appendChild(article);
+    list.appendChild(section);
+  });
+}
+
+function renderDiscographyError() {
+  const list = document.getElementById("discography-list");
+
+  if (!list) {
+    return;
+  }
+
+  list.innerHTML = "";
+
+  const section = document.createElement("section");
+  section.className = "section";
+
+  const message = document.createElement("p");
+  message.textContent = "作品情報を読み込めませんでした。";
+
+  section.appendChild(message);
+  list.appendChild(section);
+}
+
+function formatDate(value) {
+  const match = String(value).match(
+    /^(\d{4})-(\d{2})-(\d{2})$/
+  );
+
+  if (!match) {
+    return String(value);
+  }
+
+  return `${match[1]}.${match[2]}.${match[3]}`;
+}
+</script>
 
 </body>
 </html>

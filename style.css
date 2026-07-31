@@ -1790,3 +1790,10 @@ a {
   }
 }
 
+/* ===== LIVE STICKY TAB ACTIVE COLOR FIX ===== */
+#live-upcoming:checked ~ .live-sticky-controls .live-tabs label[for="live-upcoming"],
+#live-past:checked ~ .live-sticky-controls .live-tabs label[for="live-past"] {
+  color: #fff;
+  background: var(--accent);
+}
+

@@ -2,6 +2,7 @@
 
 const NEWS_JSON_FILE = "news.json";
 const LIVE_JSON_FILE = "live.json";
+const DISCOGRAPHY_JSON_FILE = "discography.json";
 
 document.addEventListener("DOMContentLoaded", function () {
   initializeHomeGallery();
@@ -14,6 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
   loadNextLive().catch(function (error) {
     console.error(error);
     renderLiveError();
+  });
+
+  loadLatestDiscography().catch(function (error) {
+    console.error(error);
+    renderDiscographyError();
   });
 });
 
@@ -340,6 +346,120 @@ async function loadNews() {
   const value = await fetchJson(NEWS_JSON_FILE);
   const newsItems = normalizeNews(value);
   renderNews(newsItems);
+}
+
+async function loadLatestDiscography() {
+  const value = await fetchJson(DISCOGRAPHY_JSON_FILE);
+
+  const items = Array.isArray(value) ? value : [];
+
+  const visibleItems = items
+    .filter(function (item) {
+      return item && item.visible !== false;
+    })
+    .sort(function (a, b) {
+      return String(b.releaseDate || "").localeCompare(
+        String(a.releaseDate || "")
+      );
+    });
+
+  renderLatestDiscography(visibleItems[0] || null);
+}
+
+function renderLatestDiscography(item) {
+  const preview = document.querySelector(
+    ".home-release .release-preview"
+  );
+
+  if (!preview) {
+    return;
+  }
+
+  if (!item) {
+    preview.innerHTML = `
+      <div class="artwork-placeholder">
+        ARTWORK
+      </div>
+
+      <div class="release-copy">
+        <p class="small-label">COMING SOON</p>
+        <h3 class="release-title">作品情報はありません</h3>
+
+        <a class="inline-link" href="discography.html">
+          Show more
+        </a>
+      </div>
+    `;
+    return;
+  }
+
+  const image = String(item.image || "").trim();
+  const type = String(item.type || "").trim();
+  const title = String(item.title || "").trim();
+  const releaseDate = String(item.releaseDate || "").trim();
+
+  preview.innerHTML = `
+    ${
+      image
+        ? `
+          <img
+            class="artwork-placeholder"
+            src="${escapeHtml(image)}"
+            alt="${escapeHtml(title || "作品")} ジャケット"
+          >
+        `
+        : `
+          <div class="artwork-placeholder">
+            ARTWORK
+          </div>
+        `
+    }
+
+    <div class="release-copy">
+      <p class="small-label">
+        ${escapeHtml(type)}
+      </p>
+
+      <h3 class="release-title">
+        ${escapeHtml(title)}
+      </h3>
+
+      <p class="release-date">
+        ${escapeHtml(formatDate(releaseDate))} RELEASE
+      </p>
+
+      <a class="inline-link" href="discography.html">
+        Show more
+      </a>
+    </div>
+  `;
+}
+
+function renderDiscographyError() {
+  const preview = document.querySelector(
+    ".home-release .release-preview"
+  );
+
+  if (!preview) {
+    return;
+  }
+
+  preview.innerHTML = `
+    <div class="artwork-placeholder">
+      ARTWORK
+    </div>
+
+    <div class="release-copy">
+      <p class="small-label">ERROR</p>
+      <h3 class="release-title">
+        作品情報を読み込めませんでした
+      </h3>
+
+      <a class="inline-link" href="discography.html">
+        Show more
+      </a>
+    </div>
+  `;
 }
 
 async function loadNextLive() {

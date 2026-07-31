@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+/* ===== DISCOGRAPHY ===== */
+
+.discography-item{
+  display:grid;
+  grid-template-columns:minmax(260px,440px) minmax(0,1fr);
+  gap:clamp(36px,8vw,96px);
+  align-items:center;
+}
+
+.artwork-placeholder{
+  width:100%;
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(56,104,170,.22),
+      transparent 46%
+    ),
+    #15171b;
+  color:rgba(255,255,255,.42);
+  font-size:.7rem;
+  letter-spacing:.24em;
+}
+
+.discography-copy{
+  min-width:0;
+}
+
+.discography-copy h2{
+  margin:8px 0 16px;
+  font-family:serif;
+  font-size:clamp(2.5rem,6vw,4.8rem);
+  font-weight:500;
+  letter-spacing:.07em;
+}
+
+.discography-copy p{
+  color:rgba(255,255,255,.75);
+}
+
+.release-date{
+  margin-top:10px;
+}
+
+.button-row{
+  margin-top:28px;
+}
+
+@media (max-width:780px){
+
+  .discography-item{
+    grid-template-columns:1fr;
+    gap:26px;
+  }
+
+  .discography-copy h2{
+    font-size:clamp(2rem,9vw,3rem);
+  }
+}

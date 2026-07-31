@@ -1632,3 +1632,128 @@ a {
   }
 }
 
+/* ===== LIVE CARD COMPACT — PC & MOBILE ===== */
+
+/* live.html may use either body.live-page or body.compact-page */
+.live-page .live-card,
+.compact-page .live-card {
+  padding: 22px 26px;
+  border-radius: 16px;
+}
+
+.live-page .live-card-top,
+.compact-page .live-card-top {
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.live-page .live-card time,
+.compact-page .live-card time {
+  flex-shrink: 0;
+  gap: 6px;
+}
+
+.live-page .live-date-year,
+.live-page .live-date-main,
+.compact-page .live-date-year,
+.compact-page .live-date-main {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: 0.025em;
+}
+
+.live-page .live-card h2,
+.compact-page .live-card h2 {
+  margin: 0 0 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+}
+
+.live-page .live-details,
+.compact-page .live-details {
+  margin-top: 0;
+}
+
+.live-page .live-details div,
+.compact-page .live-details div {
+  padding: 11px 0;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 16px;
+}
+
+.live-page .live-details dt,
+.compact-page .live-details dt {
+  font-size: 0.62rem;
+  line-height: 1.5;
+  letter-spacing: 0.11em;
+}
+
+.live-page .live-details dd,
+.compact-page .live-details dd {
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.live-page .live-card-list,
+.compact-page .live-card-list {
+  gap: 18px;
+}
+
+@media (max-width: 780px) {
+  .live-page .live-card,
+  .compact-page .live-card {
+    padding: 20px 22px;
+    border-radius: 15px;
+  }
+
+  .live-page .live-card-top,
+  .compact-page .live-card-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 5px 8px;
+  }
+
+  .live-page .live-date-year,
+  .live-page .live-date-main,
+  .compact-page .live-date-year,
+  .compact-page .live-date-main {
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .live-page .live-card h2,
+  .compact-page .live-card h2 {
+    margin: 7px 0 14px;
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  .live-page .live-details div,
+  .compact-page .live-details div {
+    padding: 10px 0;
+    display: block;
+  }
+
+  .live-page .live-details dt,
+  .compact-page .live-details dt {
+    margin-bottom: 5px;
+    font-size: 0.6rem;
+  }
+
+  .live-page .live-details dd,
+  .compact-page .live-details dd {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .live-page .live-card-list,
+  .compact-page .live-card-list {
+    gap: 14px;
+  }
+}
+

@@ -1490,7 +1490,7 @@ a {
 /* ===== HOME GALLERY PC SIZE ===== */
 @media (min-width: 781px) {
   .home-gallery {
-    width: min(calc(100% - (var(--side) * 2)), 1100px);
+    width: min(calc(100% - (var(--side) * 2)), 700px);
     margin: 32px auto 0;
   }
 

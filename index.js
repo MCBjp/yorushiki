@@ -484,6 +484,17 @@ function ensureHomeLiveStyles() {
       overflow-wrap: anywhere;
     }
 
+    @media (min-width: 781px) {
+      #home-live-content .home-live-meta {
+        justify-content: flex-start;
+        gap: 0.35em;
+      }
+
+      #home-live-content .home-live-venue {
+        text-align: left;
+      }
+    }
+
     @media (max-width: 420px) {
       #home-live-content.home-live-card {
         padding: 24px 18px 26px;

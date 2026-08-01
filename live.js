@@ -75,10 +75,6 @@ function card(item,past){
 <span class="live-date-main">${d[1]}.${d[2]}</span>
 </time>
 
-<span class="live-badge${past?' live-badge-past':''}">
-${past?'PAST':'UPCOMING'}
-</span>
-
 </div>
 
 <h2>${escape(item.venue||item.title||"LIVE")}</h2>

@@ -1797,3 +1797,9 @@ a {
   background: var(--accent);
 }
 
+/* ===== HEADER PURE BLACK ===== */
+.site-header,
+.site-header .header-inner {
+  background: #000;
+}
+

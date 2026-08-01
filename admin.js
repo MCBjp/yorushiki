@@ -265,6 +265,7 @@ document.getElementById("live-form").addEventListener("submit", function (event)
     artists: splitLines(document.getElementById("live-artists").value),
     ticketUrl: document.getElementById("live-ticket-url").value.trim(),
     note: document.getElementById("live-note").value.trim(),
+    produced: booleanValue(document.getElementById("live-produced").value),
     visible: booleanValue(document.getElementById("live-visible").value)
   };
 
@@ -325,6 +326,7 @@ function resetNewsForm() {
 function resetLiveForm() {
   document.getElementById("live-form").reset();
   document.getElementById("live-edit-index").value = "";
+  document.getElementById("live-produced").value = "false";
   document.getElementById("live-visible").value = "true";
   document.getElementById("live-cancel-edit").classList.add("hidden");
 }
@@ -407,6 +409,7 @@ function renderLive() {
               <p>
                 ${escapeHtml(item.date)}
                 ／ ${escapeHtml(item.venue)}
+                ／ ${item.produced === true ? "夜敷 produce" : "通常ライブ"}
                 ／ ${item.visible === false ? "非公開" : "公開"}
               </p>
             </div>
@@ -500,6 +503,7 @@ function editLive(index) {
     : "";
   document.getElementById("live-ticket-url").value = item.ticketUrl || "";
   document.getElementById("live-note").value = item.note || "";
+  document.getElementById("live-produced").value = String(item.produced === true);
   document.getElementById("live-visible").value = String(item.visible !== false);
   document.getElementById("live-cancel-edit").classList.remove("hidden");
   document.getElementById("tab-live").scrollIntoView({ behavior: "smooth" });

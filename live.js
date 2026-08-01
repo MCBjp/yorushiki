@@ -68,6 +68,10 @@ function card(item,past){
   return `
 <article class="live-card">
 
+${item.produced === true ? `
+<div class="live-produce-badge">夜敷 produce</div>
+` : ""}
+
 <div class="live-card-top">
 
 <time datetime="${item.date}">

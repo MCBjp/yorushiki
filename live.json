@@ -150,6 +150,7 @@
     ],
     "ticketUrl": "",
     "note": "",
+    "produced": true,
     "visible": true
   },
   {
